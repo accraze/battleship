@@ -35,14 +35,13 @@ void skip();
 
 
 void main() {
-	char ch; 
 	
 	programStart();
 	startMenu();	
 
 }
 
-void main_menu()		//menu displays the menu of options for the user
+void main_menu() //menu displays the menu of options for the user
 {
 	cout << "\n\nMenu Options\n";
 	cout << "------------------------------------------------------\n";
@@ -228,20 +227,21 @@ void gameOver(void){
 
 class Ship {
 public:
-	// Get & Set
+	// Get & Set for Health 
 	int get_health() { return health; }
 	void set_health(int h) { health = h; }
 	
-	ShipType get_ship_type() { return type; }
+	ShipType get_type() { return type; }
 	
-	bool destroyed() { return health == 0; }
+	bool destroyed() { return health == 0; } // checks to see if the ship is destroyed
 	
+	//Get & Set for last turn fired Fired
 	int lastFired() { return lastFired; }
 	void set_lastFired(int f) { lastFired = f; }
 	
 	
 	
-	virtual int get_max_health() = 0;
+	virtual int total_health() = 0;
 	virtual bool can_attack(int turn) = 0;
 	
 	
@@ -251,7 +251,49 @@ protected:
 	int health;
 	ShipType type;
 	int lastFired;
-};
+}
 
 
+// Battleship Class
+class Battleship : public Ship {
+public:
+	Battleship() { type = BATTLESHIP; set_health(total_health()); set_lastFired(-1); }
+	int total_health() { return 4; }
+	bool can_attack(int turn) { return !destroyed(); }
+	
+}
 
+//Cruiser Class
+class Cruiser : public Ship {
+public:
+	Cruiser() { type = CRUISER; set_health(total_health()); set_lastFired(-1); }
+	int total_health() { return 3; }
+	bool can_attack(int turn) { return !destroyed(); }
+}
+
+
+//Carrier Class
+class Carrier : public Ship {
+public:
+	Carrier() { type = CARRIER; set_health(total_health()); set_lastFired(-1); }
+	int total_health() { return 5; }
+	bool can_attack(int turn) { return !destroyed(); }
+}
+
+
+//Destroyer Class
+class Destroyer : public Ship {
+public:
+	Destroyer() { type = DESTROYER; set_health(total_health()); set_lastFired(-1); }
+	int total_health() { return 2; }
+	bool can_attack(int turn) { return !destroyed(); }
+}
+
+
+//Submarine Class
+class Submarine : public Ship {
+public:
+	Submarine() { type = SUBMARINE; set_health(total_health()); set_lastFired(-1); }
+	int total_health() { return 2; }
+	bool can_attack(int turn) { return !destroyed(); }
+}
