@@ -5,7 +5,7 @@ using namespace std;
 
 //Declaring all Global Variables
 int turnCount=1, gameInput=0, fireHere = 0, j=0;	
-char mainInput;
+char mainInput, fireInput;
 Battleship* pShip1 = NULL;
 Destroyer* pShip2 = NULL;
 Cruiser* pShip3 = NULL;
@@ -13,7 +13,7 @@ Carrier* pShip4 = NULL;
 Submarine* pShip5 = NULL;
 bool shipMove=true;
 
-enum ShipType {
+enum ShipType {  // sets 5 different ship types
 	CARRIER,
 	BATTLESHIP,
 	CRUISER,
@@ -29,8 +29,13 @@ void new_game();
 void view_ranking();
 void programStart();
 void battle_menu();
+void fire_menu(void);
 void battle_branch(char option);
 void skip();
+void gameOver(void);
+void victory(void);
+void turnReset(void);
+void turnCount(void);
 
 
 
@@ -43,12 +48,14 @@ void main() {
 
 void main_menu() //menu displays the menu of options for the user
 {
+	cout << endl << endl << endl;
 	cout << "\n\nMenu Options\n";
 	cout << "------------------------------------------------------\n";
 	cout << "n: New Game\n";
 	cout << "v: View Ranking\n";
 	cout << "q: Quit\n";
 	cout << "\n\nPlease enter a choice (n, v, or q) ---> "; 
+	
 }
 
 void programStart()
@@ -89,7 +96,7 @@ void branching(char option)
 			view_ranking();   // view high scores
 			break;
 			
-		case 'q':			// quit game
+		case 'q':			// quit entire game
 			break;
 			
 		default:
@@ -102,7 +109,12 @@ void branching(char option)
 void new_game()
 {
 	// needs to have player set the grid sizes
-	// needs to have player place battleships on the grid
+	pShip1 = new Battleship();
+	pShip2 = new Cruiser();
+	pShip3 = new Carrier();
+	pShip4 = new Destroyer();
+	pShip5 = new Submarine();
+	
 	turnReset();			//Set the turn counter back to 1.
 	battleSwitch();			//Go to the game menu
 }
@@ -123,10 +135,28 @@ void battle_menu()
 	cout << "4: Display Enemy's remaining Battleships\n";
 	cout << "5: Skip Turn\n";
 	cout << "6: Quit\n";
-	cout << "\n\nPlease enter a choice (1, 2, 3, 4, 5 or 6) ---> "; 
+	cout << "\n\nEnter a choice (1, 2, 3, 4, 5 or 6) ---> "; 
 	
 }
 
+void fire_menu(void)
+{	
+	cout << "\nWhich Ship to Fire with?\n";
+	cout << "------------------------------------------------------\n";
+	cout << "1: Battleship\n";
+	cout << "2: Cruiser\n";
+	cout << "3: Carrier\n";
+	cout << "4: Destroyer\n";
+	cout << "5: Submarine\n";
+	cout << "\n\nEnter a choice (1, 2, 3, 4, or 5) ---> ";
+	
+}
+
+//////////////////////////////////////
+/////////////////////////////////////
+// THIS IS THE MAIN BATTLE LOOP/////
+///////////////////////////////////
+//////////////////////////////////
 
 void battleSwitch(void){
 	// case1: player wins the game
@@ -140,21 +170,52 @@ void battleSwitch(void){
 		gameOver();
 		// print high scores!!
 	}
-	
-	if()
-	
 	battle_menu();			//Print out the battle menu
 	cin >> gameInput;		//obtain user's input
 	switch (gameInput) {
 		case 1:          // fire at enemy
 			shipMove=true;
 			// fill in firing logic here
+			fire();
+			cin >> fireInput;
+				
+				switch (fireInput) {
+					case 1:
+						//battleship
+						break;
+					case 2:
+						//cruiser
+						break;
+						
+					case 3:
+						//carrier
+						break;
+					case 4:
+						//destroyer
+						break;
+					case 5:
+						//submarine
+						break;
+						
+					default:
+						cout << "Error! Must be a number between 1-5" << endl;
+						fireMenu();	//prints the fire menu again
+						break;
+				}
+			
 			break;
 			
 		case 2:          // move ships
-			if(shipMovie){ // checks to see if ship has been moved this turn or not
+			if(shipMove){ // checks to see if ship has been moved this turn or not
 			// fill in moving logic
 			}
+			
+			else {
+				cout << endl << endl << endl;
+				cout << "Error! Ship cannot be moved this turn";
+				cout << endl << endl << endl;
+			}
+
 			break;
 			
 		case 3:          // display the player's ships/health
@@ -177,6 +238,16 @@ void battleSwitch(void){
 			
 		case 6:          // quit the game
 			// DELETE ALL OBJECTS!!!!!
+			delete pShip1;
+			pShip1 = NULL;
+			delete pShip2;
+			pShip2 = NULL;
+			delete pShip3;
+			pShip3 = NULL;
+			delete pShip4;
+			pShip4 = NULL;
+			delete pShip5;
+			pShip5 = NULL;
 			
 			break;
 			
@@ -201,14 +272,20 @@ void turnReset(void){	//Increment the turn by 1.
 	turnCount = 1;
 }
 
-void victory(void){
+void victory(void){  // method called when the player wins the game
+	cout << endl << endl << endl;
 	cout << "Hurray! You sunk all of the enemy's Battleships";
+	cout << endl << endl << endl;
+	// add player name to high score///
+	//print high scores
 	startMenu();
 	
 }
 
-void gameOver(void){
+void gameOver(void){  // method called when the computer wins the game
+	cout << endl << endl << endl;
 	cout << "Wah Wah! You suck!";
+	cout << endl << endl << endl;
 	startMenu();
 	
 }
