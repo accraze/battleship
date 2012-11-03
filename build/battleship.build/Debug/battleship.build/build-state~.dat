@@ -1,0 +1,51 @@
+Tbattleship
+v7
+r0
+t372839447.068879
+cCheck dependencies
+cCompileC build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+
+N/Developer/SDKs/MacOSX10.6.sdk
+c000000004E40710E00000000000000EE
+t1312846094
+s238
+
+N/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship
+t2
+s0
+
+N/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/battleship.LinkFileList
+c000000005088DC960000000000000082
+t1351146646
+s130
+
+N/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o
+t2
+s0
+
+N/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp
+c000000005088DC940000000000000C01
+t1351146644
+s3073
+i<iostream>
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies372839446#372839446#0(0"0(0#1#0"3343187568374212096#0"0#
+
+CCompileC build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s372839446.989608
+e372839447.068791
+r0
+xCompileC
+xbuild/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o
+x/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@71"Compile /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp372839447#372839447#0(540"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void battle()':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:93: error: 'battle_menu' was not declared in this scope/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:96: error: 'battle_branch' was not declared in this scope/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void battle_menu()':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:103: error: unknown escape sequence '\B'3(4@44"'battle_menu' was not declared in this scope372839447#94#120#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp372839444#93#0#93#0#34"'*' was not declared in this scope0(4@46"'battle_branch' was not declared in this scope372839447#214#122#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp372839444#96#0#96#0#34"'*' was not declared in this scope0(4@28"Unknown escape sequence '\B'372839447#435#105#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp372839444#103#0#103#0#0"0(0#0#63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp8660259774160596992#1521"    cd /Users/accraze/Documents/ASU/classes/CSE240/battleship    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-generated-files.hmap -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-own-target-headers.hmap -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-all-target-headers.hmap -iquote /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-project-headers.hmap -F/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/include -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/DerivedSources/x86_64 -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/DerivedSources -c /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp -o /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o1#
+
+CLd /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship normal x86_64
+r0
+
