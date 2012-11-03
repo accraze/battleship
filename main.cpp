@@ -215,3 +215,43 @@ void gameOver(void){
 }
 
 
+//======================================================
+//
+///___  _   _  ____  ____  ___ 
+/// __)( )_( )(_  _)(  _ \/ __)
+//\__ \ ) _ (  _)(_  )___/\__ \
+//(___/(_) (_)(____)(__)  (___/
+//
+// contains: ship class, battleship class, cruiser class,
+//           destroyer, submarine and carrier classes.
+//======================================================
+
+class Ship {
+public:
+	// Get & Set
+	int get_health() { return health; }
+	void set_health(int h) { health = h; }
+	
+	ShipType get_ship_type() { return type; }
+	
+	bool destroyed() { return health == 0; }
+	
+	int lastFired() { return lastFired; }
+	void set_lastFired(int f) { lastFired = f; }
+	
+	
+	
+	virtual int get_max_health() = 0;
+	virtual bool can_attack(int turn) = 0;
+	
+	
+protected:
+	
+	
+	int health;
+	ShipType type;
+	int lastFired;
+};
+
+
+
