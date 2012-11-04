@@ -6,11 +6,11 @@ using namespace std;
 //Declaring all Global Variables
 int turnCount=1, gameInput=0, fireHere = 0, j=0;	
 char mainInput, fireInput;
-Battleship* pShip1 = NULL;
-Destroyer* pShip2 = NULL;
-Cruiser* pShip3 = NULL;
-Carrier* pShip4 = NULL;
-Submarine* pShip5 = NULL;
+Battleship* Battleship = NULL;
+Cruiser* Cruiser = NULL;
+Carrier* Carrier = NULL;
+Destroyer* Destroyer = NULL;
+Submarine* Submarine = NULL;
 bool shipMove=true;
 
 enum ShipType {  // sets 5 different ship types
@@ -39,24 +39,39 @@ void turnCount(void);
 
 
 
+////////////////////
+// grid class /////
+//////////////////
+class playerGrid
+{
+private:
+	char _Index[1];
+	int hasShip;
+	
+	playerGrid* next;
+	
+public:
+	//Constructor
+	playerGrid(){}
+	playerGrid(char *Index, int _hasShip) {strcpy(_Index,Index); hasShip = _hasShip; }
+	playerGrid* getNext() {return next;}
+	
+} *pGridHead;
+
+
+
+
+///////////////////
+// main method ///
+/////////////////
+
 void main() {
 	
-	programStart();
-	startMenu();	
+	programStart(); // display title screen
+	startMenu();	// display main menu
 
 }
 
-void main_menu() //menu displays the menu of options for the user
-{
-	cout << endl << endl << endl;
-	cout << "\n\nMenu Options\n";
-	cout << "------------------------------------------------------\n";
-	cout << "n: New Game\n";
-	cout << "v: View Ranking\n";
-	cout << "q: Quit\n";
-	cout << "\n\nPlease enter a choice (n, v, or q) ---> "; 
-	
-}
 
 void programStart()
 {  cout << "***********************************************************************"<<endl;
@@ -84,6 +99,18 @@ void startMenu(void) {
 
 }
 
+void main_menu() //displays the menu of options for the user
+{
+	cout << endl << endl << endl;
+	cout << "\n\nMenu Options\n";
+	cout << "------------------------------------------------------\n";
+	cout << "n: New Game\n";
+	cout << "v: View Ranking\n";
+	cout << "q: Quit\n";
+	cout << "\n\nPlease enter a choice (n, v, or q) ---> "; 
+	
+}
+
 void branching(char option)		
 {
 	switch(option)
@@ -109,11 +136,11 @@ void branching(char option)
 void new_game()
 {
 	// needs to have player set the grid sizes
-	pShip1 = new Battleship();
-	pShip2 = new Cruiser();
-	pShip3 = new Carrier();
-	pShip4 = new Destroyer();
-	pShip5 = new Submarine();
+	Battleship = new Battleship();
+	Cruiser = new Cruiser();
+	Carrier = new Carrier();
+	Destroyer = new Destroyer();
+	Submarine = new Submarine();
 	
 	turnReset();			//Set the turn counter back to 1.
 	battleSwitch();			//Go to the game menu
@@ -151,6 +178,17 @@ void fire_menu(void)
 	cout << "\n\nEnter a choice (1, 2, 3, 4, or 5) ---> ";
 	
 }
+void shipMove_menu(void)
+{	
+	cout << "\nMove which Ship?\n";
+	cout << "------------------------------------------------------\n";
+	cout << "1: Battleship\n";
+	cout << "2: Cruiser\n";
+	cout << "3: Carrier\n";
+	cout << "4: Destroyer\n";
+	cout << "5: Submarine\n";
+	cout << "\n\nEnter a choice (1, 2, 3, 4, or 5) ---> ";	
+}
 
 //////////////////////////////////////
 /////////////////////////////////////
@@ -174,31 +212,84 @@ void battleSwitch(void){
 	cin >> gameInput;		//obtain user's input
 	switch (gameInput) {
 		case 1:          // fire at enemy
-			shipMove=true;
-			// fill in firing logic here
-			fire();
+			shipMove=true;  // sets the shipMove to true for the next turn
+			fire_menu();			// fire menu options called
 			cin >> fireInput;
 				
 				switch (fireInput) {
 					case 1:
 						//battleship
+						if (Battleship->destroyed()) { // checks to see if battleship is active
+							cout << endl << endl << endl;
+							cout << "Error: Battleship is Destroyed...";
+							cout << endl << endl << endl;
+							battleSwitch(); // back to battle menu
+						}
+						
+						else {
+							//fire logic
+						}
+
 						break;
 					case 2:
 						//cruiser
+						if (Cruiser->destroyed()) {  // checks to see if cruiser is active
+							cout << endl << endl << endl;
+							cout << "Error: Cruiser is Destroyed...";
+							cout << endl << endl << endl;
+							battleSwitch();	// back to battle menu
+						}
+						
+						else {
+							//fire logic
+						}
 						break;
 						
 					case 3:
 						//carrier
+						if (Carrier->destroyed()) { // checks to see if carrier is active
+							cout << endl << endl << endl;
+							cout << "Error: Carrier is Destroyed...";
+							cout << endl << endl << endl;
+							battleSwitch(); // back to battle menu
+						}
+						
+						else {
+							//fire logic
+						}
 						break;
 					case 4:
 						//destroyer
+						if (Destroyer->destroyed()) { // checks to see if destroyer is active
+							cout << endl << endl << endl;
+							cout << "Error: Destroyer is Destroyed...";
+							cout << endl << endl << endl;
+							battleSwitch(); // back to battle menu
+						}
+						
+						else {
+							//fire logic
+	
+						}
 						break;
 					case 5:
 						//submarine
+						if (Submarine->destroyed()) { // checks to see if submarine is active
+							cout << endl << endl << endl;
+							cout << "Error: Submarine is Destroyed...";
+							cout << endl << endl << endl;
+							battleSwitch(); // back to battle menu
+						}
+						
+						else {
+							//fire logic
+						}
 						break;
 						
 					default:
+						cout <<	endl << endl << endl;
 						cout << "Error! Must be a number between 1-5" << endl;
+						cout <<	endl << endl << endl;
 						fireMenu();	//prints the fire menu again
 						break;
 				}
@@ -206,8 +297,118 @@ void battleSwitch(void){
 			break;
 			
 		case 2:          // move ships
-			if(shipMove){ // checks to see if ship has been moved this turn or not
+			if(shipMove){ // checks to see if ships have been moved this turn or not
 			// fill in moving logic
+				switch (shipMove_menu()) {
+					case 1:
+						if (Battleship->destroyed()) { // checks to see if battleship is active
+							cout << endl << endl << endl;
+							cout << "Error: Battleship is Destroyed...";
+							cout << endl << endl << endl;
+							battleSwitch(); // back to battle menu
+						}
+						
+						else {
+						
+						//if battleship can move
+						// move & print out
+						//else {
+						//	cout << endl << endl << endl;
+						//	cout << "Error! Cannot move to that location";
+						//	cout << endl << endl << endl;
+						//}
+						}
+
+						break;
+					case 2:
+						if (Cruiser->destroyed()) {   // checks to see if cruiser is active
+							cout << endl << endl << endl;
+							cout << "Error: Cruiser is Destroyed...";
+							cout << endl << endl << endl;
+							battleSwitch(); // back to battle menu
+						}
+						
+						else {
+							
+						//if cruiser can move
+						// move & print out
+						//else {
+						//	cout << endl << endl << endl;
+						//	cout << "Error! Cannot move to that location";
+						//	cout << endl << endl << endl;
+						//}
+						}
+						
+						break;
+					
+					case 3:
+						if (Carrier->destroyed()) { // tests to see if the carrier is active
+							cout << endl << endl << endl;
+							cout << "Error: Carrier is Destroyed...";
+							cout << endl << endl << endl;
+							battleSwitch();
+						}
+						
+						else {
+						
+						//if carrier can move
+						// move & print out
+						//else {
+						//	cout << endl << endl << endl;
+						//	cout << "Error! Cannot move to that location";
+						//	cout << endl << endl << endl;
+						//}
+						
+						}
+						
+						break;
+					case 4:
+						if (Destroyer->destroyed()) {  // checks to see if destroyer is active
+							cout << endl << endl << endl;
+							cout << "Error: Destroyer is Destroyed...";
+							cout << endl << endl << endl;
+							battleSwitch(); // back to battle menu
+						}
+						
+						else {
+						
+						//if destroyer can move
+						// move & print out
+						//else {
+						//	cout << endl << endl << endl;
+						//	cout << "Error! Cannot move to that location";
+						//	cout << endl << endl << endl;
+						//}
+							
+						}
+						
+						break;
+					case 5:
+						if (Submarine->destroyed()) {  // checks to see if submarine is active
+							cout << endl << endl << endl;
+							cout << "Error: Submarine is Destroyed...";
+							cout << endl << endl << endl;
+							battleSwitch(); // back to Battle Menu
+						}
+						
+						else {
+						//if submarine can move
+						// move & print out
+						//else {
+						//	cout << endl << endl << endl;
+						//	cout << "Error! Cannot move to that location";
+						//	cout << endl << endl << endl;
+						//}
+						
+						}
+						break;
+					default:
+						cout <<	endl << endl << endl;
+						cout << "Error! Must be a number between 1-5" << endl;
+						cout <<	endl << endl << endl;
+						moveShip_menu();	//prints the fire menu again
+						break;
+				}
 			}
 			
 			else {
@@ -238,16 +439,16 @@ void battleSwitch(void){
 			
 		case 6:          // quit the game
 			// DELETE ALL OBJECTS!!!!!
-			delete pShip1;
-			pShip1 = NULL;
-			delete pShip2;
-			pShip2 = NULL;
-			delete pShip3;
-			pShip3 = NULL;
-			delete pShip4;
-			pShip4 = NULL;
-			delete pShip5;
-			pShip5 = NULL;
+			delete Battleship;
+			Battleship = NULL;
+			delete Cruiser;
+			Cruiser = NULL;
+			delete Carrier;
+			Carrier = NULL;
+			delete Destroyer;
+			Destroyer = NULL;
+			delete Submarine;
+			Submarine = NULL;
 			
 			break;
 			
@@ -287,6 +488,42 @@ void gameOver(void){  // method called when the computer wins the game
 	cout << "Wah Wah! You suck!";
 	cout << endl << endl << endl;
 	startMenu();
+	
+}
+
+
+///////////////////////////
+// View Ranking methods //
+/////////////////////////
+
+void load_file(){ 	// load scores from file
+	FILE *filename;
+	char name[ ];
+	// int ranking or score
+	
+	
+	filename = fopen(“Ranking.txt”, “rb”);
+	if(filename != NULL)
+	{
+		while(fread(name, sizeof(name), 1, filename) == 1)
+		{
+			//fread(&ranking/score, sizeof(int), 1, filename);
+			
+			insert(name, ranking);
+		}
+		fclose(filename);
+	}
+	else
+	{
+		cout << “ERROR: Unable to load file” << endl;
+	}
+}
+
+save_file()
+{
+	FILE *filename;
+	// new Player_Ranking
+	
 	
 }
 
