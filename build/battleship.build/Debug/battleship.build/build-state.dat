@@ -1,7 +1,7 @@
 Tbattleship
 v7
 r0
-t374222895.320611
+t374282698.512339
 cCheck dependencies
 cCompileC build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
 cLd /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship normal x86_64
@@ -17,8 +17,8 @@ t1254464641
 s11288
 
 N/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship
-t1352530095
-s32672
+t1352589898
+s37320
 
 N/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/battleship.LinkFileList
 c000000005088DC960000000000000082
@@ -26,23 +26,23 @@ t1351146646
 s130
 
 N/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o
-t1352530094
-s110944
+t1352589897
+s116256
 
 N/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp
-c00000000509DF8AD00000000000044B3
-t1352530093
-s17587
+c00000000509EE2460000000000004DCE
+t1352589894
+s19918
 i<iostream>
 i<ctype.h>
 
 CCheck dependencies
 r0
-lSLF07#2@18"Check dependencies374222895#374222895#0(0"0(0#1#0"8623914144#0"0#
+lSLF07#2@18"Check dependencies374282697#374282697#0(0"0(0#1#0"8604002944#0"0#
 
 CCompileC build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
-s374222895.289559
-e374222895.293809
+s374282697.530861
+e374282697.700517
 r1
 xCompileC
 xbuild/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o
@@ -51,15 +51,15 @@ xnormal
 xx86_64
 xc++
 xcom.apple.compilers.gcc.4_2
-lSLF07#2@71"Compile /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374222895#374222895#0(202"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void save_file()':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:696: warning: unused variable 'filename'1(22@26"Unused variable 'filename'374222895#97#105#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374222893#696#0#696#0#19"unused variable '*'0(0#0#63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp8624074528#1521"    cd /Users/accraze/Documents/ASU/classes/CSE240/battleship    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-generated-files.hmap -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-own-target-headers.hmap -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-all-target-headers.hmap -iquote /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-project-headers.hmap -F/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/include -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/DerivedSources/x86_64 -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/DerivedSources -c /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp -o /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o0#
+lSLF07#2@71"Compile /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374282697#374282697#0(321"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void ranking_branch(char)':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:347: warning: unused variable 'player_name'/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:348: warning: unused variable 'turn_count'2(22@29"Unused variable 'player_name'374282697#106#108#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374282694#347#0#347#0#19"unused variable '*'0(22@28"Unused variable 'turn_count'374282697#214#107#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374282694#348#0#348#0#19"unused variable '*'0(0#0#63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp8624226880#1521"    cd /Users/accraze/Documents/ASU/classes/CSE240/battleship    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-generated-files.hmap -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-own-target-headers.hmap -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-all-target-headers.hmap -iquote /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-project-headers.hmap -F/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/include -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/DerivedSources/x86_64 -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/DerivedSources -c /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp -o /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o0#
 
 CLd /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship normal x86_64
-s374222895.293889
-e374222895.320562
+s374282697.700620
+e374282698.512282
 r1
 xLd
 x/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship
 xnormal
 xx86_64
-lSLF07#2@82"Link /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship374222895#374222895#0(0"0(0#0#0"8623260704#590"    cd /Users/accraze/Documents/ASU/classes/CSE240/battleship    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/g++-4.2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -F/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -filelist /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/battleship.LinkFileList -mmacosx-version-min=10.6 -o /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship0#
+lSLF07#2@82"Link /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship374282697#374282698#0(0"0(0#0#0"8623805312#590"    cd /Users/accraze/Documents/ASU/classes/CSE240/battleship    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/g++-4.2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -F/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -filelist /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/battleship.LinkFileList -mmacosx-version-min=10.6 -o /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship0#
 

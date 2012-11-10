@@ -5,7 +5,7 @@ using namespace std;
 
 //Declaring all Global Variables
 int gameInput=0, fireHere = 0, j=0, turn_Count = 0, gridSize = 0, fireInput= 0, moveInput = 0;	
-char mainInput;
+char mainInput, rank_input, player_name[1024];
 
 bool shipMove=true;
 
@@ -27,6 +27,12 @@ enum ShipType {  // sets 5 different ship types
 // contains: ship class, battleship class, cruiser class,
 //           destroyer, submarine and carrier classes.
 //======================================================
+
+struct PlayerRanking{
+	char player_name[1024];
+	int turn_count;
+	PlayerRanking *next;
+} *HEAD = NULL;
 
 class Ship 
 {
@@ -112,6 +118,10 @@ void battle_menu();
 void fire_menu(void);
 void battle_branch(char option);
 void battleSwitch();
+void ranking_menu();
+void ranking_branch(char option);
+void printall();
+int insert(char *player_name, int turn_count);
 void skip();
 void gameOver(void);
 void victory(void);
@@ -191,7 +201,7 @@ public:
 	
 	void display_stats(){
 		cout << endl << endl << endl;
-		cout << "PLAYER'S SHIPS";
+		cout << "ENEMY'S SHIPS";
 		cout << endl;
 		cout << "Ship\t\t     Health" << endl;
 		cout << "---------------------------" << endl;
@@ -281,6 +291,10 @@ void branching(char option)
 
 void new_game()
 {
+	// get player name
+	cout << "Please enter your name: " ;
+	cin >> player_name;
+	
 	// needs to have player set the grid sizes
 	cout << "How big should the grid be?  Enter a number between 5 and 15: ";
 	cin >> gridSize;
@@ -310,9 +324,102 @@ void new_game()
 
 void view_ranking()
 {
-	// This needs to read from file and display 10 highest scores in the game 
+	// This needs to read from file and display 10 highest scores in the game
+	rank_input;
+	ranking_menu();
+	cin >> rank_input;
+	ranking_branch(tolower(rank_input));
+	
 }
 
+void ranking_menu()
+{
+	cout << endl << "Menu Options" << endl;
+	cout << "------------------------------------------------------" << endl;
+	cout << "p: Review your list" << endl; 
+	cout << "q: Save and quit" << endl;
+	cout << "r: return to main menu" << endl;
+	cout << endl << endl << "Please enter a choice (p or q) ---> "; 
+}
+
+void ranking_branch(char option)
+{
+	char player_name[1024];
+	int turn_count;
+	
+	switch(option)
+	{
+		case 'p':
+			printall();
+			break;
+			
+		case 'q':
+			// TODO: Add code to save data into a file
+			//save_file();
+			break;
+			
+		case 'r':
+			startMenu();
+			break;
+			
+		default:
+			cout << endl << "Error: Invalid Input.  Please try again..."; 
+			break;
+	}
+}
+
+
+int insert(char *player_name, int turn_count)
+{
+	struct PlayerRanking *new_node, *iter_node;
+	new_node = new PlayerRanking;
+	
+	if(new_node == 0){
+		cout << "Out of memory" << endl;
+		return -1;
+	}
+	
+	strcpy(new_node->player_name, player_name);
+	new_node->turn_count = turn_count;
+	
+	iter_node = HEAD;  // assign temp to head
+	
+	if ((HEAD == NULL)||(new_node->turn_count < iter_node->turn_count)){
+		new_node->next = HEAD;
+		HEAD = new_node;
+	}
+	else
+	{
+		while (iter_node->next != NULL){
+			if(new_node->turn_count < iter_node->turn_count){
+				new_node->next = iter_node->next;
+				iter_node->next = new_node;
+				return 0;
+			}
+			else
+				iter_node = iter_node->next;
+		}
+		new_node->next = NULL;
+		iter_node->next = new_node;
+	}
+	return 0;
+}
+
+void printall()
+{
+	struct PlayerRanking *iter_node = HEAD;
+	
+	cout << endl << "Rankings: " << endl;
+	
+	while(iter_node != NULL)
+	{
+		cout << endl << "Player Name: " << iter_node->player_name << endl;
+		cout << endl << "Score: " << iter_node->turn_count << endl;
+		cout << endl;
+		
+		iter_node = iter_node->next;
+	}
+}
 
 void battle_menu()
 {
@@ -362,13 +469,18 @@ void battleSwitch(){
 	// case1: player wins the game
 	//if (computer->lost()) {
 	//	victory();
-		//save player name
-		// check to see if player got high score
+	//save player name
+	cin >> player_name;
+	cin >> turn_Count;
+	insert(player_name, turn_Count);
+	
+	// check to see if player got high score
 	//}
 	// case2: computer wins the game
 	if (_Battleship->destroyed() && _Cruiser->destroyed() && _Carrier->destroyed() && _Destroyer->destroyed() && _Submarine->destroyed()) {
 		gameOver();
 		// print high scores!!
+		printall();
 	}
 	battle_menu();			//Print out the battle menu
 	cin >> gameInput;		//obtain user's input
@@ -589,8 +701,16 @@ void battleSwitch(){
 			break;
 			
 		case 3:          // display the player's ships/health
-			// print out the players remaining ships
-			// print out the players remaing health etc...
+			cout << endl << endl << endl;
+			cout << "PLAYER'S SHIPS";
+			cout << endl;
+			cout << "Ship\t\t     Health" << endl;
+			cout << "---------------------------" << endl;
+			cout << "Battleship\t\t" << _Battleship->get_health() << "/" << _Battleship->total_health() << endl;
+			cout << "Carrier\t\t" << _Carrier->get_health() << "/" << _Carrier->total_health() << endl;
+			cout << "Cruiser\t\t" << _Cruiser->get_health() << "/" << _Cruiser->total_health() << endl;
+			cout << "Destroyer\t\t" << _Destroyer->get_health() << "/" << _Destroyer->total_health() << endl;
+			cout << "Submarine\t\t" << _Submarine->get_health() << "/" << _Submarine->total_health() << endl;
 			battleSwitch(); // Go Back to Battle Menu...
 			break;
 			
@@ -640,6 +760,7 @@ void skip(){
 
 void turnCount(){	//Increment the turn by 1.
 	turn_Count++;
+	
 }
 
 void turnReset(){	//Increment the turn by 1.
@@ -664,39 +785,3 @@ void gameOver(void){  // method called when the computer wins the game
 	
 }
 
-
-///////////////////////////
-// View Ranking methods //
-/////////////////////////
-
-void load_file()
-{ 	// load scores from file
-	FILE *filename;
-	char name[80];
-	// int ranking or score
-	
-	
-	filename = fopen("Ranking.txt", "rb");
-	if(filename != NULL)
-	{
-		while(fread(name, sizeof(name), 1, filename) == 1)
-		{
-			//fread(&ranking/score, sizeof(int), 1, filename);
-			
-		//	insert(name, ranking);
-		}
-		fclose(filename);
-	}
-	else
-	{
-		cout << "ERROR: Unable to load file" << endl;
-	}
-}
-
-void save_file()
-{
-	FILE *filename;
-	// new Player_Ranking
-	
-	
-}

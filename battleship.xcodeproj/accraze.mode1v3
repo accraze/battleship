@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32964D2164E309000BC1AD9</string>
+						<string>F32964E8164E33E500BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F3296469164E1B5F00BC1AD9</string>
@@ -256,7 +256,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32964D3164E309000BC1AD9</string>
+						<string>F32964E9164E33E500BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F3296462164E16D700BC1AD9</string>
@@ -296,7 +296,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32964D4164E309000BC1AD9</string>
+						<string>F32964EA164E33E500BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F329646F164E1B5F00BC1AD9</string>
@@ -336,7 +336,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32964D5164E309000BC1AD9</string>
+						<string>F32964EB164E33E500BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F3296473164E1B5F00BC1AD9</string>
@@ -481,7 +481,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>F32964D1164E309000BC1AD9</string>
+										<string>F32964E7164E33E500BC1AD9</string>
 										<key>history</key>
 										<array>
 											<string>F391639A1644A81B00E69CE3</string>
@@ -689,12 +689,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>F32964D6164E309000BC1AD9</string>
 		<string>F3296460164E0E9300BC1AD9</string>
 		<string>F3296461164E0E9300BC1AD9</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>F3296467164E1B5F00BC1AD9</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>F322D4CB1637C32700912B1C</string>
 	</array>
 	<key>WindowString</key>
@@ -1079,7 +1078,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
