@@ -151,7 +151,60 @@ public:
 	
 } *pGridHead = NULL;
 
+//////////////////////////
+//Computer (AI) class////
+////////////////////////
 
+class Computer {
+	
+	
+	
+	Battleship* cbattleship;
+	Carrier* ccarrier;
+	Cruiser* ccruiser;
+	Destroyer* cdestroyer;
+	Submarine* csubmarine;
+	
+public:
+	Computer(){
+		
+		this->cbattleship = new Battleship();
+		this->ccarrier = new Carrier();
+		this->ccruiser = new Cruiser();
+		this->cdestroyer = new Destroyer();
+		this->csubmarine = new Submarine();
+	}
+	
+	~Computer() {
+		delete cbattleship;
+		delete ccarrier;
+		delete ccruiser;
+		delete cdestroyer;
+		delete csubmarine;
+	}
+	
+	bool lost(){
+		if(cbattleship->destroyed() && ccarrier->destroyed() && ccruiser->destroyed() && cdestroyer->destroyed() && csubmarine->destroyed())
+		{return true;}
+		else {return false;}
+	}
+	
+	void display_stats(){
+		cout << endl << endl << endl;
+		cout << "PLAYER'S SHIPS";
+		cout << endl;
+		cout << "Ship\t\t     Health" << endl;
+		cout << "---------------------------" << endl;
+		cout << "Battleship\t\t" << cbattleship->get_health() << "/" << cbattleship->total_health() << endl;
+		cout << "Carrier\t\t" << ccarrier->get_health() << "/" << ccarrier->total_health() << endl;
+		cout << "Cruiser\t\t" << ccruiser->get_health() << "/" << ccruiser->total_health() << endl;
+		cout << "Destroyer\t\t" << cdestroyer->get_health() << "/" << cdestroyer->total_health() << endl;
+		cout << "Submarine\t\t" << csubmarine->get_health() << "/" << csubmarine->total_health() << endl;
+	}
+	
+	
+	
+}*_computer = NULL;
 
 
 ///////////////////
@@ -249,6 +302,7 @@ void new_game()
 	_Carrier = new Carrier();
 	_Destroyer = new Destroyer();
 	_Submarine = new Submarine();
+	_computer = new Computer();
 	
 	turnReset();			//Set the turn counter back to 1.
 	battleSwitch();			//Go to the game menu
@@ -541,7 +595,8 @@ void battleSwitch(){
 			break;
 			
 		case 4:          // display the computers ships/health
-			// print out the computers remaining ships
+			
+			_computer->display_stats();
 			battleSwitch();// Go Back to Battle Menu...
 			break;	
 			
@@ -568,6 +623,9 @@ void battleSwitch(){
 			break;
 			
 		default:
+			cout << endl << endl << endl;
+			cout << "Error: Invalid Input";
+			cout << endl << endl << endl;
 			battleSwitch();    // if 1-6 not entered, Go Back To Battle Menu!
 			break;
 	}
@@ -640,30 +698,5 @@ void save_file()
 	FILE *filename;
 	// new Player_Ranking
 	
-	
-}
-
-
-
-class Computer {
-
-	void display_stats(){
-	cout << endl << endl << endl;
-		cout << "Ship\t\t     Health" << endl;
-		cout << "---------------------------" << endl;
-		cout << "Battleship\t\t" << battleship->get_health() << "/" << battleship->get_max_health() << endl;
-		cout << "Carrier\t\t\t" << carrier->get_health() << "/" << carrier->get_max_health() << endl;
-		cout << "Cruiser\t\t\t" << cruiser->get_health() << "/" << cruiser->get_max_health() << endl;
-		cout << "Destroyer\t\t" << destroyer->get_health() << "/" << destroyer->get_max_health() << endl;
-		cout << "Submarine\t\t" << submarine->get_health() << "/" << submarine->get_max_health() << endl;
-	}
-	private{
-	
-	Battleship* cbattleship;
-	Carrier* ccarrier;
-	Cruiser* ccruiser;
-	Destroyer* cdestroyer;
-	Submarine* csubmarine;
-}
 	
 }
