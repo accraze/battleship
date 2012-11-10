@@ -4,13 +4,9 @@
 using namespace std;
 
 //Declaring all Global Variables
-int turnCount=1, gameInput=0, fireHere = 0, j=0;	
-char mainInput, fireInput;
-Battleship* Battleship = NULL;
-Cruiser* Cruiser = NULL;
-Carrier* Carrier = NULL;
-Destroyer* Destroyer = NULL;
-Submarine* Submarine = NULL;
+int gameInput=0, fireHere = 0, j=0, turn_Count = 0, gridSize = 0, fireInput= 0, moveInput = 0;	
+char mainInput;
+
 bool shipMove=true;
 
 enum ShipType {  // sets 5 different ship types
@@ -21,42 +17,139 @@ enum ShipType {  // sets 5 different ship types
 	DESTROYER
 };
 
+//======================================================
+//
+///___  _   _  ____  ____  ___ 
+/// __)( )_( )(_  _)(  _ \/ __)
+//\__ \ ) _ (  _)(_  )___/\__ \
+//(___/(_) (_)(____)(__)  (___/
+//
+// contains: ship class, battleship class, cruiser class,
+//           destroyer, submarine and carrier classes.
+//======================================================
+
+class Ship 
+{
+protected:
+	int health;
+	ShipType type;
+	int _lastFired;
+	
+public:
+	// Get & Set for Health 
+	int get_health() { return health; }
+	void set_health(int h) { health = h; }
+	
+	ShipType get_type() { return type; }
+	
+	bool destroyed() { return health == 0; } // checks to see if the ship is destroyed
+	
+	//Get & Set for last turn fired Fired
+	int lastFired() { return _lastFired; }
+	void set_lastFired(int f) { _lastFired = f; }
+	
+	
+	
+	virtual int total_health() = 0;
+	virtual bool can_attack(int turn) = 0;
+};
+
+
+// Battleship Class
+class Battleship : public Ship {
+public:
+	Battleship() { type = BATTLESHIP; set_health(total_health()); set_lastFired(-1); }
+	int total_health() { return 4; }
+	bool can_attack(int turn) { return !destroyed(); }
+	
+} *_Battleship = NULL;
+
+//Cruiser Class
+class Cruiser : public Ship {
+public:
+	Cruiser() { type = CRUISER; set_health(total_health()); set_lastFired(-1); }
+	int total_health() { return 3; }
+	bool can_attack(int turn) { return !destroyed(); }
+} *_Cruiser = NULL;
+
+
+//Carrier Class
+class Carrier : public Ship {
+public:
+	Carrier() { type = CARRIER; set_health(total_health()); set_lastFired(-1); }
+	int total_health() { return 5; }
+	bool can_attack(int turn) { return !destroyed(); }
+} *_Carrier = NULL;
+
+
+//Destroyer Class
+class Destroyer : public Ship {
+public:
+	Destroyer() { type = DESTROYER; set_health(total_health()); set_lastFired(-1); }
+	int total_health() { return 2; }
+	bool can_attack(int turn) { return !destroyed(); }
+} *_Destroyer = NULL;
+
+
+//Submarine Class
+class Submarine : public Ship {
+public:
+	Submarine() { type = SUBMARINE; set_health(total_health()); set_lastFired(-1); }
+	int total_health() { return 2; }
+	bool can_attack(int turn) { return !destroyed(); }
+} *_Submarine = NULL;
+
 
 // Forward Declarations //
-void menu(); 
+void menu();
+void main_menu(); 
 void branching(char option);
 void new_game();
 void view_ranking();
 void programStart();
+void startMenu();
 void battle_menu();
 void fire_menu(void);
 void battle_branch(char option);
+void battleSwitch();
 void skip();
 void gameOver(void);
 void victory(void);
-void turnReset(void);
-void turnCount(void);
+void turnReset();
+void turnCount();
 
 
+/********************
+ ////////////////////
+ // grid class /////
+ //////////////////
+ ****************/
 
-////////////////////
-// grid class /////
-//////////////////
+typedef enum { EMPTY, OCCUPIED, WRECKAGE } SQUARETYPE;
 class playerGrid
 {
 private:
-	char _Index[1];
-	int hasShip;
-	
+	int _Index;
+	SQUARETYPE _Content;
 	playerGrid* next;
 	
 public:
 	//Constructor
 	playerGrid(){}
-	playerGrid(char *Index, int _hasShip) {strcpy(_Index,Index); hasShip = _hasShip; }
+	playerGrid(int Index, SQUARETYPE Content) {_Index = Index; _Content = Content; }
+	
+	void setContent(SQUARETYPE Content) { _Content = Content; }
+	
+	SQUARETYPE getContent() {return _Content;}
+	
 	playerGrid* getNext() {return next;}
 	
-} *pGridHead;
+	void setNext(playerGrid* nextThing) { next = nextThing; }
+	
+	int getIndex() {return _Index;}
+	
+	
+} *pGridHead = NULL;
 
 
 
@@ -65,11 +158,11 @@ public:
 // main method ///
 /////////////////
 
-void main() {
+int main() {
 	
 	programStart(); // display title screen
 	startMenu();	// display main menu
-
+	return 0;
 }
 
 
@@ -91,12 +184,12 @@ void programStart()
 }
 
 void startMenu(void) {
-
+	
 	mainInput = 0;
 	main_menu();
 	cin>>mainInput;
 	branching(tolower(mainInput));
-
+	
 }
 
 void main_menu() //displays the menu of options for the user
@@ -127,7 +220,7 @@ void branching(char option)
 			break;
 			
 		default:
-			printf("\nError: Invalid Input.  Please try again..."); 
+			cout << "Error: Invalid Input.  Please try again..." << endl; 
 			startMenu(); // go back to Main Menu
 			break;
 	}
@@ -136,11 +229,26 @@ void branching(char option)
 void new_game()
 {
 	// needs to have player set the grid sizes
-	Battleship = new Battleship();
-	Cruiser = new Cruiser();
-	Carrier = new Carrier();
-	Destroyer = new Destroyer();
-	Submarine = new Submarine();
+	cout << "How big should the grid be?  Enter a number between 5 and 15: ";
+	cin >> gridSize;
+	
+	for (int i = 0; i < gridSize; i++)
+	{
+		if (i == 0)
+		{
+			pGridHead = new playerGrid(i,EMPTY);
+		}
+		else
+		{
+			//pGridHead->setNext();
+		}
+	}
+	
+	_Battleship = new Battleship();
+	_Cruiser = new Cruiser();
+	_Carrier = new Carrier();
+	_Destroyer = new Destroyer();
+	_Submarine = new Submarine();
 	
 	turnReset();			//Set the turn counter back to 1.
 	battleSwitch();			//Go to the game menu
@@ -196,15 +304,15 @@ void shipMove_menu(void)
 ///////////////////////////////////
 //////////////////////////////////
 
-void battleSwitch(void){
+void battleSwitch(){
 	// case1: player wins the game
-	if (computer->lost()) {
-		victory();
-	  //save player name
-	  // check to see if player got high score
-	}
+	//if (computer->lost()) {
+	//	victory();
+		//save player name
+		// check to see if player got high score
+	//}
 	// case2: computer wins the game
-	if (ship1->destroyed() && ship2->destroyed() && ship3->destroyed() && ship4->destroyed() && ship5->destroyed()) {
+	if (_Battleship->destroyed() && _Cruiser->destroyed() && _Carrier->destroyed() && _Destroyer->destroyed() && _Submarine->destroyed()) {
 		gameOver();
 		// print high scores!!
 	}
@@ -215,93 +323,95 @@ void battleSwitch(void){
 			shipMove=true;  // sets the shipMove to true for the next turn
 			fire_menu();			// fire menu options called
 			cin >> fireInput;
-				
-				switch (fireInput) {
-					case 1:
-						//battleship
-						if (Battleship->destroyed()) { // checks to see if battleship is active
-							cout << endl << endl << endl;
-							cout << "Error: Battleship is Destroyed...";
-							cout << endl << endl << endl;
-							battleSwitch(); // back to battle menu
-						}
+			
+			switch (fireInput) {
+				case 1:
+					//battleship
+					if (_Battleship->destroyed()) { // checks to see if battleship is active
+						cout << endl << endl << endl;
+						cout << "Error: Battleship is Destroyed...";
+						cout << endl << endl << endl;
+						battleSwitch(); // back to battle menu
+					}
+					
+					else {
+						//fire logic
+					}
+					
+					break;
+				case 2:
+					//cruiser
+					if (_Cruiser->destroyed()) {  // checks to see if cruiser is active
+						cout << endl << endl << endl;
+						cout << "Error: Cruiser is Destroyed...";
+						cout << endl << endl << endl;
+						battleSwitch();	// back to battle menu
+					}
+					
+					else {
+						//fire logic
+					}
+					break;
+					
+				case 3:
+					//carrier
+					if (_Carrier->destroyed()) { // checks to see if carrier is active
+						cout << endl << endl << endl;
+						cout << "Error: Carrier is Destroyed...";
+						cout << endl << endl << endl;
+						battleSwitch(); // back to battle menu
+					}
+					
+					else {
+						//fire logic
+					}
+					break;
+				case 4:
+					//destroyer
+					if (_Destroyer->destroyed()) { // checks to see if destroyer is active
+						cout << endl << endl << endl;
+						cout << "Error: Destroyer is Destroyed...";
+						cout << endl << endl << endl;
+						battleSwitch(); // back to battle menu
+					}
+					
+					else {
+						//fire logic
 						
-						else {
-							//fire logic
-						}
-
-						break;
-					case 2:
-						//cruiser
-						if (Cruiser->destroyed()) {  // checks to see if cruiser is active
-							cout << endl << endl << endl;
-							cout << "Error: Cruiser is Destroyed...";
-							cout << endl << endl << endl;
-							battleSwitch();	// back to battle menu
-						}
-						
-						else {
-							//fire logic
-						}
-						break;
-						
-					case 3:
-						//carrier
-						if (Carrier->destroyed()) { // checks to see if carrier is active
-							cout << endl << endl << endl;
-							cout << "Error: Carrier is Destroyed...";
-							cout << endl << endl << endl;
-							battleSwitch(); // back to battle menu
-						}
-						
-						else {
-							//fire logic
-						}
-						break;
-					case 4:
-						//destroyer
-						if (Destroyer->destroyed()) { // checks to see if destroyer is active
-							cout << endl << endl << endl;
-							cout << "Error: Destroyer is Destroyed...";
-							cout << endl << endl << endl;
-							battleSwitch(); // back to battle menu
-						}
-						
-						else {
-							//fire logic
-	
-						}
-						break;
-					case 5:
-						//submarine
-						if (Submarine->destroyed()) { // checks to see if submarine is active
-							cout << endl << endl << endl;
-							cout << "Error: Submarine is Destroyed...";
-							cout << endl << endl << endl;
-							battleSwitch(); // back to battle menu
-						}
-						
-						else {
-							//fire logic
-						}
-						break;
-						
-					default:
-						cout <<	endl << endl << endl;
-						cout << "Error! Must be a number between 1-5" << endl;
-						cout <<	endl << endl << endl;
-						fireMenu();	//prints the fire menu again
-						break;
-				}
+					}
+					break;
+				case 5:
+					//submarine
+					if (_Submarine->destroyed()) { // checks to see if submarine is active
+						cout << endl << endl << endl;
+						cout << "Error: Submarine is Destroyed...";
+						cout << endl << endl << endl;
+						battleSwitch(); // back to battle menu
+					}
+					
+					else {
+						//fire logic
+					}
+					break;
+					
+				default:
+					cout <<	endl << endl << endl;
+					cout << "Error! Must be a number between 1-5" << endl;
+					cout <<	endl << endl << endl;
+					fire_menu();	//prints the fire menu again
+					break;
+			}
 			
 			break;
 			
 		case 2:          // move ships
 			if(shipMove){ // checks to see if ships have been moved this turn or not
-			// fill in moving logic
-				switch (shipMove_menu()) {
+				shipMove_menu();
+				fire_menu();			// fire menu options called
+				cin >> moveInput;
+				switch (moveInput) {
 					case 1:
-						if (Battleship->destroyed()) { // checks to see if battleship is active
+						if (_Battleship->destroyed()) { // checks to see if battleship is active
 							cout << endl << endl << endl;
 							cout << "Error: Battleship is Destroyed...";
 							cout << endl << endl << endl;
@@ -309,19 +419,20 @@ void battleSwitch(void){
 						}
 						
 						else {
-						
-						//if battleship can move
-						// move & print out
-						//else {
-						//	cout << endl << endl << endl;
-						//	cout << "Error! Cannot move to that location";
-						//	cout << endl << endl << endl;
-						//}
+							
+							//if battleship can move
+							// move & print out
+							shipMove = false; // ships can no longer move for this turn
+							//else {
+							//	cout << endl << endl << endl;
+							//	cout << "Error! Cannot move to that location";
+							//	cout << endl << endl << endl;
+							//}
 						}
-
+						
 						break;
 					case 2:
-						if (Cruiser->destroyed()) {   // checks to see if cruiser is active
+						if (_Cruiser->destroyed()) {   // checks to see if cruiser is active
 							cout << endl << endl << endl;
 							cout << "Error: Cruiser is Destroyed...";
 							cout << endl << endl << endl;
@@ -330,19 +441,20 @@ void battleSwitch(void){
 						
 						else {
 							
-						//if cruiser can move
-						// move & print out
-						//else {
-						//	cout << endl << endl << endl;
-						//	cout << "Error! Cannot move to that location";
-						//	cout << endl << endl << endl;
-						//}
+							//if cruiser can move
+							// move & print out
+							shipMove = false; // ships can no longer move for this turn
+							//else {
+							//	cout << endl << endl << endl;
+							//	cout << "Error! Cannot move to that location";
+							//	cout << endl << endl << endl;
+							//}
 						}
 						
 						break;
-					
+						
 					case 3:
-						if (Carrier->destroyed()) { // tests to see if the carrier is active
+						if (_Carrier->destroyed()) { // tests to see if the carrier is active
 							cout << endl << endl << endl;
 							cout << "Error: Carrier is Destroyed...";
 							cout << endl << endl << endl;
@@ -350,20 +462,21 @@ void battleSwitch(void){
 						}
 						
 						else {
-						
-						//if carrier can move
-						// move & print out
-						//else {
-						//	cout << endl << endl << endl;
-						//	cout << "Error! Cannot move to that location";
-						//	cout << endl << endl << endl;
-						//}
-						
+							
+							//if carrier can move
+							// move & print out
+							shipMove = false; // ships can no longer move for this turn
+							//else {
+							//	cout << endl << endl << endl;
+							//	cout << "Error! Cannot move to that location";
+							//	cout << endl << endl << endl;
+							//}
+							
 						}
 						
 						break;
 					case 4:
-						if (Destroyer->destroyed()) {  // checks to see if destroyer is active
+						if (_Destroyer->destroyed()) {  // checks to see if destroyer is active
 							cout << endl << endl << endl;
 							cout << "Error: Destroyer is Destroyed...";
 							cout << endl << endl << endl;
@@ -371,20 +484,21 @@ void battleSwitch(void){
 						}
 						
 						else {
-						
-						//if destroyer can move
-						// move & print out
-						//else {
-						//	cout << endl << endl << endl;
-						//	cout << "Error! Cannot move to that location";
-						//	cout << endl << endl << endl;
-						//}
+							
+							//if destroyer can move
+							// move & print out
+							shipMove = false; // ships can no longer move for this turn
+							//else {
+							//	cout << endl << endl << endl;
+							//	cout << "Error! Cannot move to that location";
+							//	cout << endl << endl << endl;
+							//}
 							
 						}
 						
 						break;
 					case 5:
-						if (Submarine->destroyed()) {  // checks to see if submarine is active
+						if (_Submarine->destroyed()) {  // checks to see if submarine is active
 							cout << endl << endl << endl;
 							cout << "Error: Submarine is Destroyed...";
 							cout << endl << endl << endl;
@@ -392,21 +506,22 @@ void battleSwitch(void){
 						}
 						
 						else {
-						//if submarine can move
-						// move & print out
-						//else {
-						//	cout << endl << endl << endl;
-						//	cout << "Error! Cannot move to that location";
-						//	cout << endl << endl << endl;
-						//}
-						
+							//if submarine can move
+							// move & print out
+							shipMove = false; // ships can no longer move for this turn
+							//else {
+							//	cout << endl << endl << endl;
+							//	cout << "Error! Cannot move to that location";
+							//	cout << endl << endl << endl;
+							//}
+							
 						}
 						break;
 					default:
 						cout <<	endl << endl << endl;
 						cout << "Error! Must be a number between 1-5" << endl;
 						cout <<	endl << endl << endl;
-						moveShip_menu();	//prints the fire menu again
+						shipMove_menu();	//prints the fire menu again
 						break;
 				}
 			}
@@ -416,7 +531,7 @@ void battleSwitch(void){
 				cout << "Error! Ship cannot be moved this turn";
 				cout << endl << endl << endl;
 			}
-
+			
 			break;
 			
 		case 3:          // display the player's ships/health
@@ -439,16 +554,16 @@ void battleSwitch(void){
 			
 		case 6:          // quit the game
 			// DELETE ALL OBJECTS!!!!!
-			delete Battleship;
-			Battleship = NULL;
-			delete Cruiser;
-			Cruiser = NULL;
-			delete Carrier;
-			Carrier = NULL;
-			delete Destroyer;
-			Destroyer = NULL;
-			delete Submarine;
-			Submarine = NULL;
+			delete _Battleship;
+			_Battleship = NULL;
+			delete _Cruiser;
+			_Cruiser = NULL;
+			delete _Carrier;
+			_Carrier = NULL;
+			delete _Destroyer;
+			_Destroyer = NULL;
+			delete _Submarine;
+			_Submarine = NULL;
 			
 			break;
 			
@@ -459,18 +574,18 @@ void battleSwitch(void){
 }
 
 void skip(){
-// skip turn
+	// skip turn
 	cout << endl << endl << endl;
 	cout << "Skipping Player's Turn";
 	cout << endl << endl << endl;
 }
 
-void turnCount(void){	//Increment the turn by 1.
-	turnCount++;
+void turnCount(){	//Increment the turn by 1.
+	turn_Count++;
 }
 
-void turnReset(void){	//Increment the turn by 1.
-	turnCount = 1;
+void turnReset(){	//Increment the turn by 1.
+	turn_Count = 1;
 }
 
 void victory(void){  // method called when the player wins the game
@@ -496,30 +611,31 @@ void gameOver(void){  // method called when the computer wins the game
 // View Ranking methods //
 /////////////////////////
 
-void load_file(){ 	// load scores from file
+void load_file()
+{ 	// load scores from file
 	FILE *filename;
-	char name[ ];
+	char name[80];
 	// int ranking or score
 	
 	
-	filename = fopen(“Ranking.txt”, “rb”);
+	filename = fopen("Ranking.txt", "rb");
 	if(filename != NULL)
 	{
 		while(fread(name, sizeof(name), 1, filename) == 1)
 		{
 			//fread(&ranking/score, sizeof(int), 1, filename);
 			
-			insert(name, ranking);
+		//	insert(name, ranking);
 		}
 		fclose(filename);
 	}
 	else
 	{
-		cout << “ERROR: Unable to load file” << endl;
+		cout << "ERROR: Unable to load file" << endl;
 	}
 }
 
-save_file()
+void save_file()
 {
 	FILE *filename;
 	// new Player_Ranking
@@ -528,86 +644,26 @@ save_file()
 }
 
 
-//======================================================
-//
-///___  _   _  ____  ____  ___ 
-/// __)( )_( )(_  _)(  _ \/ __)
-//\__ \ ) _ (  _)(_  )___/\__ \
-//(___/(_) (_)(____)(__)  (___/
-//
-// contains: ship class, battleship class, cruiser class,
-//           destroyer, submarine and carrier classes.
-//======================================================
 
-class Ship {
-public:
-	// Get & Set for Health 
-	int get_health() { return health; }
-	void set_health(int h) { health = h; }
+class Computer {
+
+	void display_stats(){
+	cout << endl << endl << endl;
+		cout << "Ship\t\t     Health" << endl;
+		cout << "---------------------------" << endl;
+		cout << "Battleship\t\t" << battleship->get_health() << "/" << battleship->get_max_health() << endl;
+		cout << "Carrier\t\t\t" << carrier->get_health() << "/" << carrier->get_max_health() << endl;
+		cout << "Cruiser\t\t\t" << cruiser->get_health() << "/" << cruiser->get_max_health() << endl;
+		cout << "Destroyer\t\t" << destroyer->get_health() << "/" << destroyer->get_max_health() << endl;
+		cout << "Submarine\t\t" << submarine->get_health() << "/" << submarine->get_max_health() << endl;
+	}
+	private{
 	
-	ShipType get_type() { return type; }
-	
-	bool destroyed() { return health == 0; } // checks to see if the ship is destroyed
-	
-	//Get & Set for last turn fired Fired
-	int lastFired() { return lastFired; }
-	void set_lastFired(int f) { lastFired = f; }
-	
-	
-	
-	virtual int total_health() = 0;
-	virtual bool can_attack(int turn) = 0;
-	
-	
-protected:
-	
-	
-	int health;
-	ShipType type;
-	int lastFired;
+	Battleship* cbattleship;
+	Carrier* ccarrier;
+	Cruiser* ccruiser;
+	Destroyer* cdestroyer;
+	Submarine* csubmarine;
 }
-
-
-// Battleship Class
-class Battleship : public Ship {
-public:
-	Battleship() { type = BATTLESHIP; set_health(total_health()); set_lastFired(-1); }
-	int total_health() { return 4; }
-	bool can_attack(int turn) { return !destroyed(); }
 	
-}
-
-//Cruiser Class
-class Cruiser : public Ship {
-public:
-	Cruiser() { type = CRUISER; set_health(total_health()); set_lastFired(-1); }
-	int total_health() { return 3; }
-	bool can_attack(int turn) { return !destroyed(); }
-}
-
-
-//Carrier Class
-class Carrier : public Ship {
-public:
-	Carrier() { type = CARRIER; set_health(total_health()); set_lastFired(-1); }
-	int total_health() { return 5; }
-	bool can_attack(int turn) { return !destroyed(); }
-}
-
-
-//Destroyer Class
-class Destroyer : public Ship {
-public:
-	Destroyer() { type = DESTROYER; set_health(total_health()); set_lastFired(-1); }
-	int total_health() { return 2; }
-	bool can_attack(int turn) { return !destroyed(); }
-}
-
-
-//Submarine Class
-class Submarine : public Ship {
-public:
-	Submarine() { type = SUBMARINE; set_health(total_health()); set_lastFired(-1); }
-	int total_health() { return 2; }
-	bool can_attack(int turn) { return !destroyed(); }
 }
