@@ -6,6 +6,7 @@ using namespace std;
 //Declaring all Global Variables
 int gameInput=0, fireHere = 0, j=0, turn_Count = 0, gridSize = 0, fireInput= 0, moveInput = 0;	
 char mainInput, rank_input, player_name[1024];
+//playerGrid *_grid1, *_grid2; 
 
 bool shipMove=true;
 
@@ -30,7 +31,7 @@ enum ShipType {  // sets 5 different ship types
 
 struct PlayerRanking{
 	char player_name[1024];
-	int turn_count;
+	int turn_Count;
 	PlayerRanking *next;
 } *HEAD = NULL;
 
@@ -121,7 +122,9 @@ void battleSwitch();
 void ranking_menu();
 void ranking_branch(char option);
 void printall();
-int insert(char *player_name, int turn_count);
+void load_file();
+void save_file();
+int insert(char *player_name, int turn_Count);
 void skip();
 void gameOver(void);
 void victory(void);
@@ -130,36 +133,62 @@ void turnCount();
 
 
 /********************
- ////////////////////
- // grid class /////
- //////////////////
- ****************/
+/////////////////////
+/// grid class /////
+//////////////////
+//****************/
 
 typedef enum { EMPTY, OCCUPIED, WRECKAGE } SQUARETYPE;
-class playerGrid
-{
-private:
+struct square {  // struct for each individual square in the grid
 	int _Index;
 	SQUARETYPE _Content;
-	playerGrid* next;
+	Ship* ship;
+	square* prev;
+	square* next;
+};
+class playerGrid
+{
+	
+	
+private:
+	int total_size;
+	square* _first; // points to the front of the squares
+	square* _last;	// points to the last of the squares
 	
 public:
+	int get_total_size() { return total_size; }
+	square* get_first() { return _first; }
+	square* get_last() { return _last; }
+	
 	//Constructor
-	playerGrid(){}
-	playerGrid(int Index, SQUARETYPE Content) {_Index = Index; _Content = Content; }
+	playerGrid(int total_size) {
+		this->total_size = total_size;
+		this->_first = NULL;   // initializes firt square pointer 
+		this->_last = NULL;		// initializes last square pointer
+		
+		
+	}
 	
-	void setContent(SQUARETYPE Content) { _Content = Content; }
+	~playerGrid(){  // deletes each individual square in the playerGrid
+		square* temp1 = this->_first;  // start at the beginning
+		while(temp1 != NULL) {
+			square* temp2 = temp1->next; // get the next square
+			delete temp1;   // delete current square
+			temp1 = temp2;  // swap the next square to current square
+		}
+	}
+	//void setContent(SQUARETYPE Content) { _Content = Content; }
 	
-	SQUARETYPE getContent() {return _Content;}
+	//SQUARETYPE getContent() {return _Content;}
 	
-	playerGrid* getNext() {return next;}
+	//playerGrid* getNext() {return next;}
 	
-	void setNext(playerGrid* nextThing) { next = nextThing; }
+	//void setNext(playerGrid* nextThing) { next = nextThing; }
 	
-	int getIndex() {return _Index;}
+	//int getIndex() {return _Index;}
 	
-	
-} *pGridHead = NULL;
+} *_grid1 = NULL;
+playerGrid *_grid2 = NULL;
 
 //////////////////////////
 //Computer (AI) class////
@@ -217,12 +246,12 @@ public:
 }*_computer = NULL;
 
 
-///////////////////
-// main method ///
-/////////////////
+////////////////////
+// main method ////
+//////////////////
 
 int main() {
-	
+	load_file();
 	programStart(); // display title screen
 	startMenu();	// display main menu
 	return 0;
@@ -296,20 +325,30 @@ void new_game()
 	cin >> player_name;
 	
 	// needs to have player set the grid sizes
-	cout << "How big should the grid be?  Enter a number between 5 and 15: ";
+	cout << "How big should the grid be?  Enter a number between 10 and 50: ";
 	cin >> gridSize;
-	
-	for (int i = 0; i < gridSize; i++)
-	{
-		if (i == 0)
-		{
-			pGridHead = new playerGrid(i,EMPTY);
-		}
-		else
-		{
-			//pGridHead->setNext();
-		}
+	while(gridSize < 10 || gridSize > 50){		//Checks if the input is in bounds
+		
+		cout << "ERROR: Invalid Input (Value out of bounds)" << endl << endl << endl;
+		cout << "How big should the grid be?  Enter a number between 10 and 50: " << endl;
+		cin  >> gridSize;
 	}
+	
+	//Creates two new grid objetcs
+	_grid1 = new playerGrid(gridSize);	// grid 1 is player grid
+	_grid2 = new playerGrid(gridSize);	// grid 2 is computer grid
+	
+	//for (int i = 0; i < gridSize; i++)
+	//{
+	//	if (i == 0)
+	//	{
+	//		pGridHead = new playerGrid(i,EMPTY);
+	//	}
+	//	else
+	//	{
+	//		//pGridHead->setNext();
+	//	}
+	//}
 	
 	_Battleship = new Battleship();
 	_Cruiser = new Cruiser();
@@ -334,7 +373,7 @@ void view_ranking()
 
 void ranking_menu()
 {
-	cout << endl << "Menu Options" << endl;
+	cout << endl << "Ranking Menu Options" << endl;
 	cout << "------------------------------------------------------" << endl;
 	cout << "p: Review your list" << endl; 
 	cout << "q: Save and quit" << endl;
@@ -345,7 +384,7 @@ void ranking_menu()
 void ranking_branch(char option)
 {
 	char player_name[1024];
-	int turn_count;
+	int turn_Count;
 	
 	switch(option)
 	{
@@ -369,7 +408,7 @@ void ranking_branch(char option)
 }
 
 
-int insert(char *player_name, int turn_count)
+int insert(char *player_name, int turn_Count)
 {
 	struct PlayerRanking *new_node, *iter_node;
 	new_node = new PlayerRanking;
@@ -380,18 +419,18 @@ int insert(char *player_name, int turn_count)
 	}
 	
 	strcpy(new_node->player_name, player_name);
-	new_node->turn_count = turn_count;
+	new_node->turn_Count = turn_Count;
 	
 	iter_node = HEAD;  // assign temp to head
 	
-	if ((HEAD == NULL)||(new_node->turn_count < iter_node->turn_count)){
+	if ((HEAD == NULL)||(new_node->turn_Count < iter_node->turn_Count)){
 		new_node->next = HEAD;
 		HEAD = new_node;
 	}
 	else
 	{
 		while (iter_node->next != NULL){
-			if(new_node->turn_count < iter_node->turn_count){
+			if(new_node->turn_Count < iter_node->turn_Count){
 				new_node->next = iter_node->next;
 				iter_node->next = new_node;
 				return 0;
@@ -414,12 +453,63 @@ void printall()
 	while(iter_node != NULL)
 	{
 		cout << endl << "Player Name: " << iter_node->player_name << endl;
-		cout << endl << "Score: " << iter_node->turn_count << endl;
+		cout << endl << "Score: " << iter_node->turn_Count << endl;
 		cout << endl;
 		
 		iter_node = iter_node->next;
 	}
+	startMenu();
 }
+
+void save_file() 
+{
+	FILE *fileName;
+	struct PlayerRanking *node = HEAD;
+	
+	fileName = fopen("ranking.txt", "wb");
+	
+	if(fileName != NULL)
+	{
+		while(node != NULL)
+		{
+			fwrite(node->player_name, sizeof(node->player_name), 1, fileName);
+			fwrite(&node->turn_Count, sizeof(int), 1, fileName);
+			
+			node = node->next;
+		}
+		fclose(fileName);
+	}
+	else
+	{ 
+		cout << "Error: Unable to save to the file \"ranking.txt\"." << endl;
+	}
+}
+
+void load_file(){
+	
+	FILE *fileName;
+	char name[1024];
+	int turn_Count;
+	
+	fileName = fopen("ranking.txt", "rb");
+	
+	if(fileName != NULL)
+	{
+		while(fread(name, sizeof(name), 1, fileName) == 1)
+		{
+			fread(&turn_Count, sizeof(int), 1, fileName);
+			
+			insert(name, turn_Count);
+		}
+		fclose(fileName);
+	}
+	else
+	{
+		cout << "Error: Unable to load file" << endl;
+	}
+	
+}
+
 
 void battle_menu()
 {
@@ -467,15 +557,10 @@ void shipMove_menu(void)
 
 void battleSwitch(){
 	// case1: player wins the game
-	//if (computer->lost()) {
-	//	victory();
-	//save player name
-	cin >> player_name;
-	cin >> turn_Count;
-	insert(player_name, turn_Count);
-	
-	// check to see if player got high score
-	//}
+	if (_computer->lost()) {
+		victory();
+	 //check to see if player got high score
+	}
 	// case2: computer wins the game
 	if (_Battleship->destroyed() && _Cruiser->destroyed() && _Carrier->destroyed() && _Destroyer->destroyed() && _Submarine->destroyed()) {
 		gameOver();
@@ -771,8 +856,11 @@ void victory(void){  // method called when the player wins the game
 	cout << endl << endl << endl;
 	cout << "Hurray! You sunk all of the enemy's Battleships";
 	cout << endl << endl << endl;
-	// add player name to high score///
-	//print high scores
+	cin >> player_name;
+	cin >> turn_Count;
+	insert(player_name, turn_Count);
+	printall();
+	save_file();
 	startMenu();
 	
 }
