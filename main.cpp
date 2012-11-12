@@ -5,8 +5,7 @@ using namespace std;
 
 //Declaring all Global Variables
 int gameInput=0, fireHere = 0, j=0, turn_Count = 0, gridSize = 0, fireInput= 0, moveInput = 0;	
-char mainInput, rank_input, player_name[1024];
-//playerGrid *_grid1, *_grid2; 
+char mainInput, rank_input, player_name[1024]; 
 
 bool shipMove=true;
 
@@ -185,8 +184,8 @@ public:
 	// this method finds the index before the desired square
 	//******************************************************
 	square* index_before_square(int index) {
-		square* temp = this->_first;
-		while(temp != NULL && temp->next != NULL) {
+		square* temp = this->_first;				// creates 
+		while(temp != NULL && temp->next != NULL) { // iterates through linked list
 			if(temp->next->_Index >= index)
 				return (temp->_Index < index ? temp : NULL);
 			
@@ -204,9 +203,11 @@ public:
 	bool squareOccupied(int index){  // checks to see if a square is occupied
 		square* previousSquare = index_before_square(index);
 		
+		//makes sure there is a previous square
 		if(previousSquare != NULL && previousSquare->next != NULL && previousSquare->next->_Index == index) 
 		return true;
 		
+		// checks if there is only one square
 		if(previousSquare == NULL && _first != NULL && _first->_Index == index)
 			return true;
 		
@@ -233,7 +234,7 @@ public:
 		}
 		square* previousSquare = index_before_square(index);
 		
-		// creates a new square and fills in all of it's properties
+		// creates a new 'square' and fills in all of it's properties
 		square* newSquare = new square();
 		newSquare->next = NULL;			// sets next to NULL
 		newSquare->prev = NULL;			// sets prev to NULL
@@ -244,7 +245,7 @@ public:
 		newSquare->prev = previousSquare;  // insert square before previous 
 		newSquare->next = (previousSquare != NULL ? previousSquare->next : this->_first);
 		
-		//re-aligns the prev and next pointers within the new square if they arent not NULL
+		//re-aligns the prev and next pointers within the new square if they arent NULL
 		if(newSquare->prev != NULL) newSquare->prev->next = newSquare;
 		if(newSquare->next != NULL) newSquare->next->prev = newSquare;
 		
@@ -316,6 +317,48 @@ public:
 		cout << "Cruiser\t\t" << ccruiser->get_health() << "/" << ccruiser->total_health() << endl;
 		cout << "Destroyer\t\t" << cdestroyer->get_health() << "/" << cdestroyer->total_health() << endl;
 		cout << "Submarine\t\t" << csubmarine->get_health() << "/" << csubmarine->total_health() << endl;
+	}
+	
+	void grid_Setup(){
+		
+		int battleship, cruiser, carrier, destroyer, submarine;
+		// sets battleship location to a random number between 0-GRIDSIZE
+		battleship = rand() % gridSize;
+		
+		do {
+			// sets cruiser location to a random number between 0-GRIDSIZE
+			cruiser = rand() % gridSize;
+		} while (cruiser == battleship);
+		// checks to make sure the random location value is not the same as any of the other locations
+		
+		do {
+			// sets carrier location to a random number between 0-GRIDSIZE
+			carrier = rand() % gridSize;
+		} while (carrier == battleship || carrier == cruiser);
+		// checks to make sure the random location value is not the same as any of the other locations
+		
+		do {
+			// sets destroyer location to a random number between 0-GRIDSIZE
+			destroyer = rand() % gridSize;
+		} while (destroyer == battleship || destroyer == cruiser || destroyer == carrier);
+		// checks to make sure the random location value is not the same as any of the other locations
+		
+		do {
+			// sets submarine location to a random number between 0-GRIDSIZE
+			submarine = rand() % gridSize;
+		} while (submarine == battleship || submarine == cruiser || submarine == carrier || submarine == destroyer);
+		// checks to make sure the random location value is not the same as any of the other locations
+		
+		_grid2->set_ship(battleship, cbattleship);  // sets battleship on computer grid
+		_grid2->set_ship(cruiser, ccruiser);		// sets cruiser on computer grid
+		_grid2->set_ship(carrier, ccarrier);		// sets carrier on computer grid
+		_grid2->set_ship(destroyer, cdestroyer);	// sets destroyer on computer grid
+		_grid2->set_ship(submarine, csubmarine);			// sets submarine on computer grid
+		
+		cout << endl << endl << endl;
+		cout << "The Computer's grid is set...";
+		cout << endl << endl << endl;
+	
 	}
 	
 	
@@ -428,7 +471,7 @@ void new_game()
 	//set the player's ships on grid
 	playerGridSetup();
 	//set the computer's ships on grid
-	//_computer->gridSetup();
+	_computer->grid_Setup();
 	
 	turnReset();			//Set the turn counter back to 1.
 	battleSwitch();			//Go to the battle menu

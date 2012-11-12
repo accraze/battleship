@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32965ED16508A3100BC1AD9</string>
+						<string>F32966081650934B00BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F329646F164E1B5F00BC1AD9</string>
@@ -242,46 +242,6 @@
 			<key>Content</key>
 			<dict>
 				<key>PBXProjectModuleGUID</key>
-				<string>F329651416502D3900BC1AD9</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>Interface.h</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>F329651516502D3900BC1AD9</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>Interface.h</string>
-						<key>_historyCapacity</key>
-						<integer>0</integer>
-						<key>bookmark</key>
-						<string>F32965EE16508A3100BC1AD9</string>
-						<key>history</key>
-						<array>
-							<string>F329651616502D3900BC1AD9</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {750, 481}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>107 167 750 522 0 0 1280 778 </string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
 				<string>F3296467164E1B5F00BC1AD9</string>
 				<key>PBXProjectModuleLabel</key>
 				<string>AI.cpp</string>
@@ -296,7 +256,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32965EF16508A3100BC1AD9</string>
+						<string>F32966091650934B00BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F3296469164E1B5F00BC1AD9</string>
@@ -336,7 +296,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32965F016508A3100BC1AD9</string>
+						<string>F329660A1650934B00BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F3296473164E1B5F00BC1AD9</string>
@@ -376,7 +336,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32965F116508A3100BC1AD9</string>
+						<string>F329660B1650934B00BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F32964F41650260A00BC1AD9</string>
@@ -416,7 +376,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32965F216508A3100BC1AD9</string>
+						<string>F329660C1650934B00BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F3296532165034E600BC1AD9</string>
@@ -533,7 +493,7 @@
 							<real>186</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>-77 147 1280 631 0 0 1280 778 </string>
+						<string>-30 143 1280 631 0 0 1280 778 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -563,7 +523,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>F32965EC16508A3100BC1AD9</string>
+										<string>F32966071650934B00BC1AD9</string>
 										<key>history</key>
 										<array>
 											<string>F391639A1644A81B00E69CE3</string>
@@ -585,7 +545,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1072, 395}}</string>
 								<key>RubberWindowFrame</key>
-								<string>-77 147 1280 631 0 0 1280 778 </string>
+								<string>-30 143 1280 631 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -605,7 +565,7 @@
 								<key>Frame</key>
 								<string>{{0, 400}, {1072, 190}}</string>
 								<key>RubberWindowFrame</key>
-								<string>-77 147 1280 631 0 0 1280 778 </string>
+								<string>-30 143 1280 631 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -775,12 +735,11 @@
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>F322D4CB1637C32700912B1C</string>
 		<string>F3296467164E1B5F00BC1AD9</string>
-		<string>F329651416502D3900BC1AD9</string>
 		<string>F329646D164E1B5F00BC1AD9</string>
 		<string>/Users/accraze/Documents/ASU/classes/CSE240/battleship/battleship.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>-77 147 1280 631 0 0 1280 778 </string>
+	<string>-30 143 1280 631 0 0 1280 778 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
