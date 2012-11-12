@@ -130,12 +130,12 @@ void gameOver(void);
 void victory(void);
 void turnReset();
 void turnCount();
-
+void playerGridSetup();
 
 /********************
 /////////////////////
 /// grid class /////
-//////////////////
+///////////////////
 //****************/
 
 typedef enum { EMPTY, OCCUPIED, WRECKAGE } SQUARETYPE;
@@ -160,15 +160,18 @@ public:
 	square* get_first() { return _first; }
 	square* get_last() { return _last; }
 	
+	//*************
 	//Constructor
+	//*************
 	playerGrid(int total_size) {
 		this->total_size = total_size;
 		this->_first = NULL;   // initializes firt square pointer 
 		this->_last = NULL;		// initializes last square pointer
-		
-		
 	}
 	
+	//************
+	//destructor
+	//************
 	~playerGrid(){  // deletes each individual square in the playerGrid
 		square* temp1 = this->_first;  // start at the beginning
 		while(temp1 != NULL) {
@@ -177,15 +180,89 @@ public:
 			temp1 = temp2;  // swap the next square to current square
 		}
 	}
-	//void setContent(SQUARETYPE Content) { _Content = Content; }
 	
-	//SQUARETYPE getContent() {return _Content;}
+	//******************************************************
+	// this method finds the index before the desired square
+	//******************************************************
+	square* index_before_square(int index) {
+		square* temp = this->_first;
+		while(temp != NULL && temp->next != NULL) {
+			if(temp->next->_Index >= index)
+				return (temp->_Index < index ? temp : NULL);
+			
+			temp = temp->next;
+		}
+		
+		if(temp == NULL) return NULL;  // returns NULL if head == NULL or no grid is created
+		
+		return (temp->_Index < index ? temp : NULL);  // returns either 
+	}
 	
-	//playerGrid* getNext() {return next;}
+	//*************************************************************************
+	// checks to see if a specific square is occupied and gives the ship type
+	//*************************************************************************
+	bool squareOccupied(int index){  // checks to see if a square is occupied
+		square* previousSquare = index_before_square(index);
+		
+		if(previousSquare != NULL && previousSquare->next != NULL && previousSquare->next->_Index == index) 
+		return true;
+		
+		if(previousSquare == NULL && _first != NULL && _first->_Index == index)
+			return true;
+		
+		return false;	
+	}
 	
-	//void setNext(playerGrid* nextThing) { next = nextThing; }
+	//*******************************
+	// lets player set ship onto grid
+	//*******************************
+	bool set_ship(int index, Ship* ship) {
+		// checks to see if entered location is out of bounds
+		if(index >= this->total_size){
+			cout << endl << endl << endl;
+			cout << "Error! Value is out of Grid Boundary";
+		    cout << endl << endl << endl;
+			return false; 
+		}
+		//checks to see if the entered location is occupied
+		if(squareOccupied(index)){
+			cout << endl << endl << endl;
+			cout << "Error! Grid Square is already Occupied";
+		    cout << endl << endl << endl;
+			return false;
+		}
+		square* previousSquare = index_before_square(index);
+		
+		// creates a new square and fills in all of it's properties
+		square* newSquare = new square();
+		newSquare->next = NULL;			// sets next to NULL
+		newSquare->prev = NULL;			// sets prev to NULL
+		newSquare->_Index = index;		// gives the correct grid index to the new square
+		newSquare->ship = ship;         // places ship on square
+		newSquare->_Content = OCCUPIED; // sets square to OCCUPIED
+		
+		newSquare->prev = previousSquare;  // insert square before previous 
+		newSquare->next = (previousSquare != NULL ? previousSquare->next : this->_first);
+		
+		//re-aligns the prev and next pointers within the new square if they arent not NULL
+		if(newSquare->prev != NULL) newSquare->prev->next = newSquare;
+		if(newSquare->next != NULL) newSquare->next->prev = newSquare;
+		
+		// if the newSquare is the first occupied square then set _first to point to the new square
+		if( _first == NULL) 
+			_first = newSquare;
+		// if the newSquare is the first occupied square then set _last to point to the new square
+		if(_last == NULL) 
+			_last = newSquare;
+		
+		// rewinds 'head' to the beginning of the linked list
+		while(_first->prev != NULL) _first = _first->prev;
+		
+		//forwards 'tail' to the end of the linked list
+		while(_last->next  != NULL) _last = _last->next;
+		return true;
+	}
 	
-	//int getIndex() {return _Index;}
 	
 } *_grid1 = NULL;
 playerGrid *_grid2 = NULL;
@@ -338,27 +415,23 @@ void new_game()
 	_grid1 = new playerGrid(gridSize);	// grid 1 is player grid
 	_grid2 = new playerGrid(gridSize);	// grid 2 is computer grid
 	
-	//for (int i = 0; i < gridSize; i++)
-	//{
-	//	if (i == 0)
-	//	{
-	//		pGridHead = new playerGrid(i,EMPTY);
-	//	}
-	//	else
-	//	{
-	//		//pGridHead->setNext();
-	//	}
-	//}
-	
+	//declare all player's ships
 	_Battleship = new Battleship();
 	_Cruiser = new Cruiser();
 	_Carrier = new Carrier();
 	_Destroyer = new Destroyer();
 	_Submarine = new Submarine();
+	
+	//create enemy computer
 	_computer = new Computer();
 	
+	//set the player's ships on grid
+	playerGridSetup();
+	//set the computer's ships on grid
+	//_computer->gridSetup();
+	
 	turnReset();			//Set the turn counter back to 1.
-	battleSwitch();			//Go to the game menu
+	battleSwitch();			//Go to the battle menu
 }
 
 void view_ranking()
@@ -834,6 +907,69 @@ void battleSwitch(){
 			battleSwitch();    // if 1-6 not entered, Go Back To Battle Menu!
 			break;
 	}
+}
+
+//**************************************
+// this method sets up the players board
+//**************************************
+void playerGridSetup(){
+	
+	// place battleship on the grid
+	int location_index;
+	cout << endl << endl << "Place your battleship on a grid square (0-" << gridSize << ")" << endl ;
+    cin  >> location_index;		//gets location index for battleship
+	while(location_index < 0  || location_index > gridSize){		//Checks to see if the user's input would be somewhere on the grid.
+		cout << "Error: Value is not on Grid" << endl << endl;
+		cout << endl << "Place your battleship on a grid square (0-" << gridSize << ")" << endl ;
+		cin  >> location_index;		//gets location for battleship
+		
+	}
+	_grid1->set_ship(location_index, _Battleship ); // sets the battleship at given location on the grid
+	
+	//place carrier on the grid
+	cout << endl << endl << "Place your carrier on a grid square (0-" << gridSize << ")" << endl ;
+    cin  >> location_index;		//gets location index for carrier
+	while(location_index < 0  || location_index > gridSize){		//Checks to see if location_index is on Grid
+		cout << "Error: Value is not on Grid" << endl << endl;
+		cout << endl << "Place your carrier on a grid square (0-" << gridSize << ")" << endl ;
+		cin  >> location_index;		//gets location for carrier
+		
+	}
+	_grid1->set_ship(location_index, _Carrier ); // sets the carrier at given location on the grid
+	
+	//place cruiser on the grid
+	cout << endl << endl << "Place your cruiser on a grid square (0-" << gridSize << ")" << endl ;
+    cin  >> location_index;		//gets location index for cruiser
+	while(location_index < 0  || location_index > gridSize){		//Checks to see if location_index is on Grid
+		cout << "Error: Value is not on Grid" << endl << endl;
+		cout << endl << "Place your cruiser on a grid square (0-" << gridSize << ")" << endl ;
+		cin  >> location_index;		///gets location for cruiser
+		
+	}
+	_grid1->set_ship(location_index, _Cruiser ); // sets the cruiser at given location on the grid	
+	
+	//place destroyer on the grid
+	cout << endl << endl << "Place your destroyer on a grid square (0-" << gridSize << ")" << endl ;
+    cin  >> location_index;		//gets location index for battleship
+	while(location_index < 0  || location_index > gridSize){		//Checks to see if location_index is on Grid
+		cout << "Error: Value is not on Grid" << endl << endl;
+		cout << endl << "Place your destroyer on a grid square (0-" << gridSize << ")" << endl ;
+		cin  >> location_index;		//Places the destroyer location into battle
+		
+	}
+	_grid1->set_ship(location_index, _Destroyer ); // sets the destroyer at given location on the grid
+	
+	//place submarine on the grid
+	cout << endl << endl << "Place your submarine on a grid square (0-" << gridSize << ")" << endl ;
+    cin  >> location_index;		//gets location index for submarine
+	while(location_index < 0  || location_index > gridSize){		//Checks to see if location_index is on Grid
+		cout << "Error: Value is not on Grid" << endl << endl;
+		cout << endl << "Place your submarine on a grid square (0-" << gridSize << ")" << endl ;
+		cin  >> location_index;		//Places the submarine location into battle
+		
+	}
+	_grid1->set_ship(location_index, _Destroyer ); // sets the submarine at given location on the grid
+	
 }
 
 void skip(){

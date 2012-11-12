@@ -1,3 +1,3 @@
 /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void ranking_branch(char)':
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:386: warning: unused variable 'player_name'
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:387: warning: unused variable 'turn_Count'
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:459: warning: unused variable 'player_name'
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:460: warning: unused variable 'turn_Count'
