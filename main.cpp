@@ -4,7 +4,7 @@
 using namespace std;
 
 //Declaring all Global Variables
-int gameInput=0, fireHere = 0, j=0, turn_Count = 0, gridSize = 0, fireInput= 0, moveInput = 0;	
+int gameInput=0, fireHere = 0, j=0, turn_Count = 0, gridSize = 0, fireInput= 0, moveInput = 0, moveLocation =0;	
 char mainInput, rank_input, player_name[1024]; 
 
 bool shipMove=true;
@@ -163,9 +163,9 @@ public:
 	//Constructor
 	//*************
 	playerGrid(int total_size) {
-		this->total_size = total_size;
-		this->_first = NULL;   // initializes firt square pointer 
-		this->_last = NULL;		// initializes last square pointer
+		this->total_size = total_size;	// sets the total_size of the grid
+		this->_first = NULL;			// initializes firt square pointer 'head'
+		this->_last = NULL;				// initializes last square pointer 'tail'
 	}
 	
 	//************
@@ -198,7 +198,7 @@ public:
 	}
 	
 	//*************************************************************************
-	// checks to see if a specific square is occupied and gives the ship type
+	// checks to see if a specific square is occupied
 	//*************************************************************************
 	bool squareOccupied(int index){  // checks to see if a square is occupied
 		square* previousSquare = index_before_square(index);
@@ -264,8 +264,53 @@ public:
 		return true;
 	}
 	
+	//**********************************************************************
+	//MOVE_SHIP: deletes ship from current square and sets it on a new square
+	//**********************************************************************
+	bool move_ship(int index, Ship* ship){
 	
-} *_grid1 = NULL;
+		// find the current location of ship
+		square* iter = this->_first; // start at the top of the linked list
+		int current_square;
+		
+		//traverse linked list until the correct square is found
+		while(iter != NULL) {
+			if(iter->ship == ship){	// if the ships match......
+				current_square = iter->_Index; // gets the current index of the ship
+			
+			// move the ship to a new area
+			set_ship(index,iter->ship); 
+			
+			//create two temp 'square' instances 
+			square* previous_square = index_before_square(current_square);
+			square* destroy_square = (previous_square == NULL) ? this->_first : previous_square->next;
+			
+			//delete the square
+			if(destroy_square->next != NULL) 
+				destroy_square->next->prev = previous_square; // if the next square != NULL, pull the previous square over it
+			if(destroy_square->prev != NULL) 
+				destroy_square->prev->next = destroy_square->next; // if the prev square != NULL, pull the next square back over it
+			
+			// if the square to be destroyed is the head....
+			if(this->_first == destroy_square) _first = destroy_square->next; // move the 'head' to the next square
+			
+			//if the sqaure to be destroyed is the tail...
+			if(this->_last == destroy_square) _last = destroy_square->prev; // moves 'tail" to the previous square
+			
+			// delete this ship!!
+			iter->ship = NULL;
+			delete iter->ship;
+			return true; // returns true to indicate that the ship has moved
+			
+			}else{
+				iter = iter->next;		// else keep moving through the list
+			}
+		}	
+		
+		return false;  // returns false to indicate that the ship has not been moved
+	}
+		
+	} *_grid1 = NULL;
 playerGrid *_grid2 = NULL;
 
 //////////////////////////
@@ -470,6 +515,7 @@ void new_game()
 	
 	//set the player's ships on grid
 	playerGridSetup();
+	
 	//set the computer's ships on grid
 	_computer->grid_Setup();
 	
@@ -773,8 +819,7 @@ void battleSwitch(){
 			
 		case 2:          // move ships
 			if(shipMove){ // checks to see if ships have been moved this turn or not
-				shipMove_menu();
-				fire_menu();			// fire menu options called
+				shipMove_menu(); // asks which ship to move
 				cin >> moveInput;
 				switch (moveInput) {
 					case 1:
@@ -782,21 +827,37 @@ void battleSwitch(){
 							cout << endl << endl << endl;
 							cout << "Error: Battleship is Destroyed...";
 							cout << endl << endl << endl;
-							battleSwitch(); // back to battle menu
+						
 						}
 						
 						else {
+							cout << endl << endl << endl;
+							cout << "Move Battleship to Which Grid Square? (0-" << gridSize << ") ";
+							cin >> moveLocation;
+							//error handling
+							while (moveLocation < 0 || moveLocation > gridSize) {
+								cout << endl << endl << endl;
+								cout << "Error: That Square is not on the Grid!"<< endl;
+								cout << endl;
+								cout << "Move to Which Grid Square? (0-" << gridSize << ") ";
+								cin >> moveLocation;
+							}
 							
-							//if battleship can move
-							// move & print out
-							shipMove = false; // ships can no longer move for this turn
-							//else {
-							//	cout << endl << endl << endl;
-							//	cout << "Error! Cannot move to that location";
-							//	cout << endl << endl << endl;
-							//}
+							if (_grid1->set_ship(moveLocation, _Battleship)){
+							    shipMove = false; // ships can no longer move for this turn
+								cout << endl << endl << endl;
+								cout << "Battleship was successfully moved";
+								cout << endl << endl << endl;
+							
+							}else {
+								cout << endl << endl << endl;
+								cout << "Error! Ship could not move to that location";
+								cout << endl << endl << endl;
+								
+							}
 						}
 						
+						battleSwitch(); // back to battle menu
 						break;
 					case 2:
 						if (_Cruiser->destroyed()) {   // checks to see if cruiser is active
@@ -808,16 +869,33 @@ void battleSwitch(){
 						
 						else {
 							
-							//if cruiser can move
-							// move & print out
-							shipMove = false; // ships can no longer move for this turn
-							//else {
-							//	cout << endl << endl << endl;
-							//	cout << "Error! Cannot move to that location";
-							//	cout << endl << endl << endl;
-							//}
+							cout << endl << endl << endl;
+							cout << "Move Cruiser to Which Grid Square? (0-" << gridSize << ") ";
+							cin >> moveLocation;
+							//error handling
+							while (moveLocation < 0 || moveLocation > gridSize) {
+								cout << endl << endl << endl;
+								cout << "Error: That Square is not on the Grid!"<< endl;
+								cout << endl;
+								cout << "Move to Which Grid Square? (0-" << gridSize << ") ";
+								cin >> moveLocation;
+							}
+							
+							if (_grid1->set_ship(moveLocation, _Cruiser)){
+							    shipMove = false; // ships can no longer move for this turn
+								cout << endl << endl << endl;
+								cout << "Cruiser was successfully moved";
+								cout << endl << endl << endl;
+								
+							}else {
+								cout << endl << endl << endl;
+								cout << "Error! Ship could not move to that location";
+								cout << endl << endl << endl;
+								
+							}
 						}
 						
+						battleSwitch(); // back to battle menu
 						break;
 						
 					case 3:
@@ -830,16 +908,33 @@ void battleSwitch(){
 						
 						else {
 							
-							//if carrier can move
-							// move & print out
-							shipMove = false; // ships can no longer move for this turn
-							//else {
-							//	cout << endl << endl << endl;
-							//	cout << "Error! Cannot move to that location";
-							//	cout << endl << endl << endl;
-							//}
+							cout << endl << endl << endl;
+							cout << "Move Carrier to Which Grid Square? (0-" << gridSize << ") ";
+							cin >> moveLocation;
+							//error handling
+							while (moveLocation < 0 || moveLocation > gridSize) {
+								cout << endl << endl << endl;
+								cout << "Error: That Square is not on the Grid!"<< endl;
+								cout << endl;
+								cout << "Move to Which Grid Square? (0-" << gridSize << ") ";
+								cin >> moveLocation;
+							}
 							
+							if (_grid1->set_ship(moveLocation, _Carrier)){
+							    shipMove = false; // ships can no longer move for this turn
+								cout << endl << endl << endl;
+								cout << "Carrier was successfully moved";
+								cout << endl << endl << endl;
+								
+							}else {
+								cout << endl << endl << endl;
+								cout << "Error! Ship could not move to that location";
+								cout << endl << endl << endl;
+								
+							}
 						}
+						
+						battleSwitch(); // back to battle menu
 						
 						break;
 					case 4:
@@ -852,16 +947,33 @@ void battleSwitch(){
 						
 						else {
 							
-							//if destroyer can move
-							// move & print out
-							shipMove = false; // ships can no longer move for this turn
-							//else {
-							//	cout << endl << endl << endl;
-							//	cout << "Error! Cannot move to that location";
-							//	cout << endl << endl << endl;
-							//}
+							cout << endl << endl << endl;
+							cout << "Move Destroyer to Which Grid Square? (0-" << gridSize << ") ";
+							cin >> moveLocation;
+							//error handling
+							while (moveLocation < 0 || moveLocation > gridSize) {
+								cout << endl << endl << endl;
+								cout << "Error: That Square is not on the Grid!"<< endl;
+								cout << endl;
+								cout << "Move to Which Grid Square? (0-" << gridSize << ") ";
+								cin >> moveLocation;
+							}
 							
+							if (_grid1->set_ship(moveLocation, _Destroyer)){
+							    shipMove = false; // ships can no longer move for this turn
+								cout << endl << endl << endl;
+								cout << "Destroyer was successfully moved";
+								cout << endl << endl << endl;
+								
+							}else {
+								cout << endl << endl << endl;
+								cout << "Error! Ship could not move to that location";
+								cout << endl << endl << endl;
+								
+							}
 						}
+						
+						battleSwitch(); // back to battle menu
 						
 						break;
 					case 5:
@@ -873,16 +985,33 @@ void battleSwitch(){
 						}
 						
 						else {
-							//if submarine can move
-							// move & print out
-							shipMove = false; // ships can no longer move for this turn
-							//else {
-							//	cout << endl << endl << endl;
-							//	cout << "Error! Cannot move to that location";
-							//	cout << endl << endl << endl;
-							//}
+							cout << endl << endl << endl;
+							cout << "Move Submarine to Which Grid Square? (0-" << gridSize << ") ";
+							cin >> moveLocation;
+							//error handling
+							while (moveLocation < 0 || moveLocation > gridSize) {
+								cout << endl << endl << endl;
+								cout << "Error: That Square is not on the Grid!"<< endl;
+								cout << endl;
+								cout << "Move to Which Grid Square? (0-" << gridSize << ") ";
+								cin >> moveLocation;
+							}
 							
+							if (_grid1->set_ship(moveLocation, _Submarine)){
+							    shipMove = false; // ships can no longer move for this turn
+								cout << endl << endl << endl;
+								cout << "Submarine was successfully moved";
+								cout << endl << endl << endl;
+								
+							}else {
+								cout << endl << endl << endl;
+								cout << "Error! Ship could not move to that location";
+								cout << endl << endl << endl;
+								
+							}
 						}
+						
+						battleSwitch(); // back to battle menu
 						break;
 					default:
 						cout <<	endl << endl << endl;
@@ -893,10 +1022,11 @@ void battleSwitch(){
 				}
 			}
 			
-			else {
+			else { // if shipMove=false.... ship cannot be moved this turn
 				cout << endl << endl << endl;
 				cout << "Error! Ship cannot be moved this turn";
 				cout << endl << endl << endl;
+				battleSwitch(); // back to battle menu
 			}
 			
 			break;
@@ -1012,6 +1142,10 @@ void playerGridSetup(){
 		
 	}
 	_grid1->set_ship(location_index, _Destroyer ); // sets the submarine at given location on the grid
+	
+	cout << endl << endl << endl;
+	cout << "Your grid is now set...";
+	cout << endl << endl << endl;
 	
 }
 
