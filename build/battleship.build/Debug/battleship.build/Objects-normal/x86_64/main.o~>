@@ -1,3 +1,5 @@
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In member function 'Ship* playerGrid::get_square_ship(int)':
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:210: warning: unused variable 'current_square'
 /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void ranking_branch(char)':
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:548: warning: unused variable 'player_name'
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:549: warning: unused variable 'turn_Count'
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:647: warning: unused variable 'player_name'
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:648: warning: unused variable 'turn_Count'

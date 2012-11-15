@@ -148,6 +148,7 @@ struct square {  // struct for each individual square in the grid
 	square* prev;
 	square* next;
 };
+
 class playerGrid
 {
 	
@@ -248,6 +249,7 @@ public:
 		    cout << endl << endl << endl;
 			return false; 
 		}
+		
 		//checks to see if the entered location is occupied
 		if(squareOccupied(index)){
 			cout << endl << endl << endl;
@@ -349,6 +351,8 @@ class Computer {
 	Cruiser* ccruiser;
 	Destroyer* cdestroyer;
 	Submarine* csubmarine;
+	bool can_move;
+	
 	
 public:
 	Computer(){
@@ -358,6 +362,8 @@ public:
 		this->ccruiser = new Cruiser();
 		this->cdestroyer = new Destroyer();
 		this->csubmarine = new Submarine();
+		this->can_move = true;  // lets computer know it can move
+		
 	}
 	
 	~Computer() {
@@ -426,6 +432,77 @@ public:
 		cout << endl << endl << endl;
 		cout << "The Computer's grid is set...";
 		cout << endl << endl << endl;
+		
+	}
+	
+	//*******************
+	//COMPUTER's AI LOGIC
+	//*******************
+	void computer_turn(){
+	// randomly chooses between fire, move ship and skip turn (1-3)
+		int choice = rand() % 3 + 1;
+		
+		switch(choice)
+		{
+			case 1:  // fire!
+				if (!csubmarine->destroyed() && csubmarine->can_attack(turn_Count)) {
+					// fire away
+				}	
+				else if (!cdestroyer->destroyed()){
+					// fire away
+				
+				}
+				else if(!ccarrier->destroyed()) {
+				// fire away
+				}
+				else if (!ccruiser->destroyed()){
+				// fire away
+				}
+				else{
+				// fire battleship
+				}
+				break;
+		
+				
+			case 2: // move a ship
+				 if (can_move) {
+					 
+					 moveLocation = rand() % gridSize + 1;  // get a random move location  (1 - gridSize)
+					 
+					 if (!csubmarine->destroyed()) {
+						 
+						_grid2->move_ship(moveLocation,csubmarine); // move submarine
+	
+					 }	
+					 else if (!cdestroyer->destroyed()){
+						_grid2->move_ship(moveLocation,cdestroyer); // move destroyer
+						 
+					 }
+					 else if(!ccarrier->destroyed()) {
+						_grid2->move_ship(moveLocation,ccarrier); // move carrier 
+					 }
+					 else if (!ccruiser->destroyed()){
+						 _grid2->move_ship(moveLocation,ccruiser); // move cruiser
+					 }
+					 else{
+						_grid2->move_ship(moveLocation,cbattleship); // move battleship
+					 }	 
+					 
+				 }
+				break;
+				
+			case 3:			// skip the computer's turn
+				cout << endl << endl << endl;
+				cout << "The Computer is skipping it's turn";
+				cout << endl << endl << endl;
+				break;
+				
+			default:
+				cout << endl << "Computer is still thinking...." << endl; 
+				computer_turn(); // make the computer decide what to do again.
+				break;
+		}
+		
 		
 	}
 	
@@ -1092,6 +1169,12 @@ void battleSwitch(){
 			_Destroyer = NULL;
 			delete _Submarine;
 			_Submarine = NULL;
+			delete _grid1;
+			_grid1 = NULL;
+			delete _grid2;
+			_grid2 = NULL;
+			delete _computer;
+			_computer = NULL;
 			
 			break;
 			
