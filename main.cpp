@@ -1,5 +1,8 @@
 #include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 using namespace std;
 
@@ -102,7 +105,7 @@ class Submarine : public Ship {
 public:
 	Submarine() { type = SUBMARINE; set_health(total_health()); set_lastFired(-1); }
 	int total_health() { return 2; }
-	bool can_attack(int turn) { return !destroyed(); }
+	bool can_attack(int turn) { return !destroyed() && (turn_Count - lastFired() > 2); } // checks to make sure that sub can only fire every other turn
 } *_Submarine = NULL;
 
 
@@ -132,10 +135,10 @@ void turnCount();
 void playerGridSetup();
 
 /********************
-/////////////////////
-/// grid class /////
-///////////////////
-//****************/
+ /////////////////////
+ /// grid class /////
+ ///////////////////
+ //****************/
 
 typedef enum { EMPTY, OCCUPIED, WRECKAGE } SQUARETYPE;
 struct square {  // struct for each individual square in the grid
@@ -197,6 +200,26 @@ public:
 		return (temp->_Index < index ? temp : NULL);  // returns either 
 	}
 	
+	//********************************************
+	//returns a ship object at requested location
+	//********************************************
+	Ship* get_square_ship(int index){
+		
+		square* iter = this->_first; // start at the top of the linked list
+		int current_square;
+		
+		//traverse linked list until the correct square is found
+		while(iter != NULL) {
+		if (iter->_Index == index) {   // iterates through the grid list until it find the correct index
+			return iter->ship;  // return the ship
+		}
+			else {
+				iter = iter->next;
+			}
+		}	
+		
+	}
+	
 	//*************************************************************************
 	// checks to see if a specific square is occupied
 	//*************************************************************************
@@ -205,7 +228,7 @@ public:
 		
 		//makes sure there is a previous square
 		if(previousSquare != NULL && previousSquare->next != NULL && previousSquare->next->_Index == index) 
-		return true;
+			return true;
 		
 		// checks if there is only one square
 		if(previousSquare == NULL && _first != NULL && _first->_Index == index)
@@ -268,7 +291,7 @@ public:
 	//MOVE_SHIP: deletes ship from current square and sets it on a new square
 	//**********************************************************************
 	bool move_ship(int index, Ship* ship){
-	
+		
 		// find the current location of ship
 		square* iter = this->_first; // start at the top of the linked list
 		int current_square;
@@ -277,31 +300,31 @@ public:
 		while(iter != NULL) {
 			if(iter->ship == ship){	// if the ships match......
 				current_square = iter->_Index; // gets the current index of the ship
-			
-			// move the ship to a new area
-			set_ship(index,iter->ship); 
-			
-			//create two temp 'square' instances 
-			square* previous_square = index_before_square(current_square);
-			square* destroy_square = (previous_square == NULL) ? this->_first : previous_square->next;
-			
-			//delete the square
-			if(destroy_square->next != NULL) 
-				destroy_square->next->prev = previous_square; // if the next square != NULL, pull the previous square over it
-			if(destroy_square->prev != NULL) 
-				destroy_square->prev->next = destroy_square->next; // if the prev square != NULL, pull the next square back over it
-			
-			// if the square to be destroyed is the head....
-			if(this->_first == destroy_square) _first = destroy_square->next; // move the 'head' to the next square
-			
-			//if the sqaure to be destroyed is the tail...
-			if(this->_last == destroy_square) _last = destroy_square->prev; // moves 'tail" to the previous square
-			
-			// delete this ship!!
-			iter->ship = NULL;
-			delete iter->ship;
-			return true; // returns true to indicate that the ship has moved
-			
+				
+				// move the ship to a new area
+				set_ship(index,iter->ship); 
+				
+				//create two temp 'square' instances 
+				square* previous_square = index_before_square(current_square);
+				square* destroy_square = (previous_square == NULL) ? this->_first : previous_square->next;
+				
+				//delete the square
+				if(destroy_square->next != NULL) 
+					destroy_square->next->prev = previous_square; // if the next square != NULL, pull the previous square over it
+				if(destroy_square->prev != NULL) 
+					destroy_square->prev->next = destroy_square->next; // if the prev square != NULL, pull the next square back over it
+				
+				// if the square to be destroyed is the head....
+				if(this->_first == destroy_square) _first = destroy_square->next; // move the 'head' to the next square
+				
+				//if the sqaure to be destroyed is the tail...
+				if(this->_last == destroy_square) _last = destroy_square->prev; // moves 'tail" to the previous square
+				
+				// delete this ship!!
+				iter->ship = NULL;
+				delete iter->ship;
+				return true; // returns true to indicate that the ship has moved
+				
 			}else{
 				iter = iter->next;		// else keep moving through the list
 			}
@@ -309,8 +332,8 @@ public:
 		
 		return false;  // returns false to indicate that the ship has not been moved
 	}
-		
-	} *_grid1 = NULL;
+	
+} *_grid1 = NULL;
 playerGrid *_grid2 = NULL;
 
 //////////////////////////
@@ -358,8 +381,8 @@ public:
 		cout << "Ship\t\t     Health" << endl;
 		cout << "---------------------------" << endl;
 		cout << "Battleship\t\t" << cbattleship->get_health() << "/" << cbattleship->total_health() << endl;
-		cout << "Carrier\t\t" << ccarrier->get_health() << "/" << ccarrier->total_health() << endl;
-		cout << "Cruiser\t\t" << ccruiser->get_health() << "/" << ccruiser->total_health() << endl;
+		cout << "Carrier\t\t\t" << ccarrier->get_health() << "/" << ccarrier->total_health() << endl;
+		cout << "Cruiser\t\t\t" << ccruiser->get_health() << "/" << ccruiser->total_health() << endl;
 		cout << "Destroyer\t\t" << cdestroyer->get_health() << "/" << cdestroyer->total_health() << endl;
 		cout << "Submarine\t\t" << csubmarine->get_health() << "/" << csubmarine->total_health() << endl;
 	}
@@ -403,7 +426,7 @@ public:
 		cout << endl << endl << endl;
 		cout << "The Computer's grid is set...";
 		cout << endl << endl << endl;
-	
+		
 	}
 	
 	
@@ -451,7 +474,6 @@ void startMenu(void) {
 
 void main_menu() //displays the menu of options for the user
 {
-	cout << endl << endl << endl;
 	cout << "\n\nMenu Options\n";
 	cout << "------------------------------------------------------\n";
 	cout << "n: New Game\n";
@@ -721,7 +743,7 @@ void battleSwitch(){
 	// case1: player wins the game
 	if (_computer->lost()) {
 		victory();
-	 //check to see if player got high score
+		//check to see if player got high score
 	}
 	// case2: computer wins the game
 	if (_Battleship->destroyed() && _Cruiser->destroyed() && _Carrier->destroyed() && _Destroyer->destroyed() && _Submarine->destroyed()) {
@@ -827,7 +849,7 @@ void battleSwitch(){
 							cout << endl << endl << endl;
 							cout << "Error: Battleship is Destroyed...";
 							cout << endl << endl << endl;
-						
+							
 						}
 						
 						else {
@@ -848,7 +870,7 @@ void battleSwitch(){
 								cout << endl << endl << endl;
 								cout << "Battleship was successfully moved";
 								cout << endl << endl << endl;
-							
+								
 							}else {
 								cout << endl << endl << endl;
 								cout << "Error! Ship could not move to that location";
@@ -1038,8 +1060,8 @@ void battleSwitch(){
 			cout << "Ship\t\t     Health" << endl;
 			cout << "---------------------------" << endl;
 			cout << "Battleship\t\t" << _Battleship->get_health() << "/" << _Battleship->total_health() << endl;
-			cout << "Carrier\t\t" << _Carrier->get_health() << "/" << _Carrier->total_health() << endl;
-			cout << "Cruiser\t\t" << _Cruiser->get_health() << "/" << _Cruiser->total_health() << endl;
+			cout << "Carrier\t\t\t" << _Carrier->get_health() << "/" << _Carrier->total_health() << endl;
+			cout << "Cruiser\t\t\t" << _Cruiser->get_health() << "/" << _Cruiser->total_health() << endl;
 			cout << "Destroyer\t\t" << _Destroyer->get_health() << "/" << _Destroyer->total_health() << endl;
 			cout << "Submarine\t\t" << _Submarine->get_health() << "/" << _Submarine->total_health() << endl;
 			battleSwitch(); // Go Back to Battle Menu...
