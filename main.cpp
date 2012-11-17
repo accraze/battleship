@@ -297,7 +297,7 @@ public:
 		while(iter != NULL) {
 			if (iter->_Index == index) {   // iterates through the grid list until it find the correct index
 				if(iter->_Content == WRECKAGE) // checks to see if the square is wreckage...
-					{return true;}
+				{return true;}
 			}
 			else {
 				iter = iter->next;
@@ -473,11 +473,11 @@ public:
 		cout << endl;
 		cout << "Ship\t\t     Health" << endl;
 		cout << "---------------------------" << endl;
-		cout << "Battleship\t\t" << cbattleship->get_health() << "/" << cbattleship->total_health() << endl;
+		cout << "Battleship\t\t\t" << cbattleship->get_health() << "/" << cbattleship->total_health() << endl;
 		cout << "Carrier\t\t\t" << ccarrier->get_health() << "/" << ccarrier->total_health() << endl;
 		cout << "Cruiser\t\t\t" << ccruiser->get_health() << "/" << ccruiser->total_health() << endl;
-		cout << "Destroyer\t\t" << cdestroyer->get_health() << "/" << cdestroyer->total_health() << endl;
-		cout << "Submarine\t\t" << csubmarine->get_health() << "/" << csubmarine->total_health() << endl;
+		cout << "Destroyer\t\t\t" << cdestroyer->get_health() << "/" << cdestroyer->total_health() << endl;
+		cout << "Submarine\t\t\t" << csubmarine->get_health() << "/" << csubmarine->total_health() << endl;
 	}
 	
 	void grid_Setup(){
@@ -536,6 +536,7 @@ public:
 				if (!csubmarine->destroyed() && csubmarine->can_attack(turn_Count)) { // checks to make sure the sub has not fired in the last turn
 					// fire away
 					csubfire();
+					csubmarine->set_lastFired(turn_Count);
 					can_move = true;
 				}	
 				else if (!cdestroyer->destroyed()){
@@ -761,7 +762,7 @@ void ranking_branch(char option)
 			
 		case 'q':
 			// TODO: Add code to save data into a file
-			//save_file();
+			save_file();
 			break;
 			
 		case 'r':
@@ -819,12 +820,23 @@ void printall()
 	
 	while(iter_node != NULL)
 	{
-		cout << endl << "Player Name: " << iter_node->player_name << endl;
-		cout << endl << "Score: " << iter_node->turn_Count << endl;
-		cout << endl;
+		if(iter_node->turn_Count < iter_node->next->turn_Count)
+		{
+			
+			cout << endl << "Player Name: " << iter_node->player_name << endl;
+			cout << endl << "Score: " << iter_node->turn_Count << endl;
+			cout << endl;
+			iter_node = iter_node->next;
+		}
+		else
+		{	cout << endl << "Player Name: " << iter_node->next->player_name << endl;
+			cout << endl << "Score: " << iter_node->next->turn_Count << endl;
+			cout << endl;
+			iter_node = iter_node->next;
+		}
 		
-		iter_node = iter_node->next;
 	}
+	
 	startMenu();
 }
 
@@ -833,7 +845,7 @@ void save_file()
 	FILE *fileName;
 	struct PlayerRanking *node = HEAD;
 	
-	fileName = fopen("ranking.txt", "wb");
+	fileName = fopen("ranking.dbm", "wb");
 	
 	if(fileName != NULL)
 	{
@@ -848,7 +860,7 @@ void save_file()
 	}
 	else
 	{ 
-		cout << "Error: Unable to save to the file \"ranking.txt\"." << endl;
+		cout << "Error: Unable to save to the file \"ranking.dbm\"." << endl;
 	}
 }
 
@@ -858,7 +870,7 @@ void load_file(){
 	char name[1024];
 	int turn_Count;
 	
-	fileName = fopen("ranking.txt", "rb");
+	fileName = fopen("ranking.dbm", "rb");
 	
 	if(fileName != NULL)
 	{
@@ -956,6 +968,7 @@ void battleSwitch(){
 						
 						//fire logic
 						fire();
+						turnCount();
 						_computer->computer_turn(); // computer turn
 						battleSwitch();
 						
@@ -974,6 +987,7 @@ void battleSwitch(){
 					else {
 						//fire logic
 						fire();
+						turnCount();
 						_computer->computer_turn(); // computer turn
 						battleSwitch();
 					}
@@ -991,6 +1005,7 @@ void battleSwitch(){
 					else {
 						//fire logic
 						fire();
+						turnCount();
 						_computer->computer_turn(); // computer turn
 						battleSwitch();
 					}
@@ -1007,6 +1022,7 @@ void battleSwitch(){
 					else {
 						//fire logic
 						fire();
+						turnCount();
 						_computer->computer_turn(); // computer turn
 						battleSwitch(); // back to battle menu
 						
@@ -1024,9 +1040,10 @@ void battleSwitch(){
 					else {
 						//fire logic
 						subfire();
-						
+						turnCount();
 						_computer->computer_turn(); // computer turn
 						battleSwitch(); // back to battle menu
+						
 					}
 					break;
 					
@@ -1260,11 +1277,11 @@ void battleSwitch(){
 			cout << endl;
 			cout << "Ship\t\t     Health" << endl;
 			cout << "---------------------------" << endl;
-			cout << "Battleship\t\t" << _Battleship->get_health() << "/" << _Battleship->total_health() << endl;
+			cout << "Battleship\t\t\t" << _Battleship->get_health() << "/" << _Battleship->total_health() << endl;
 			cout << "Carrier\t\t\t" << _Carrier->get_health() << "/" << _Carrier->total_health() << endl;
 			cout << "Cruiser\t\t\t" << _Cruiser->get_health() << "/" << _Cruiser->total_health() << endl;
-			cout << "Destroyer\t\t" << _Destroyer->get_health() << "/" << _Destroyer->total_health() << endl;
-			cout << "Submarine\t\t" << _Submarine->get_health() << "/" << _Submarine->total_health() << endl;
+			cout << "Destroyer\t\t\t" << _Destroyer->get_health() << "/" << _Destroyer->total_health() << endl;
+			cout << "Submarine\t\t\t" << _Submarine->get_health() << "/" << _Submarine->total_health() << endl;
 			battleSwitch(); // Go Back to Battle Menu...
 			break;
 			
@@ -1302,14 +1319,14 @@ void battleSwitch(){
 			
 			break;
 			
-			case 7:
+		case 7:
 			_grid2->print_grid();
 			battleSwitch();// Go Back to Battle Menu...
 		case 8:
 			_grid1->print_grid();
 			battleSwitch();// Go Back to Battle Menu...
-				break;
-
+			break;
+			
 			
 		default:
 			cout << endl << endl << endl;
@@ -1445,54 +1462,87 @@ void fire(){		// Fire method for each ship
 		health = temp->get_health();			// save health of ship in square
 		
 		
-			cout << endl << "It's a HIT!" << endl;
-			health--;					// Otherwise decrease health and
-			temp->set_health(health);	// set it to the ship
-		    if(temp->get_health() == NULL)			//if ships health is null then ship is destroyed
-		    { cout << "Ship Destroyed! --> " << whichShip(temp->get_type()); 
-			  if(_grid1->set_wreckage(fire_at))
-				cout << endl << "Square: " << fire_at << " is now wreckage" << endl;
-		    } //returns 'destroyed' and the shiptype (enum)
-		}	
-}
-
-void subfire(){		// Fire method for each ship
-	Ship* temp;
-	int fire_at, health;
-	if (_Submarine->can_attack(turn_Count)) {
-	cout << "Which square do you want to hit? "; // pick square to fire at
-	cin  >> fire_at;
-	
-	if(!_grid2->squareOccupied(fire_at)) //check if square is empty
-	{	
-		cout << endl << "SUB MISS: Square is Empty" << endl;
-		
-	}
-	//else if(_grid2->is_wreckage(fire_at)) // check if square has wreckage
-	//{	cout<< endl;
-	//	cout << "Square Contains wreckage." << endl ;
-	//}
-	else   // if square is occupied
-	{
-		temp = _grid2->get_square_ship(fire_at); // get square you want to fire at
-		health = temp->get_health();			// save health of ship in square
-		
 		cout << endl << "It's a HIT!" << endl;
 		health--;					// Otherwise decrease health and
 		temp->set_health(health);	// set it to the ship
 		if(temp->get_health() == NULL)			//if ships health is null then ship is destroyed
-		{ cout << "Ship Destroyed! --> " << whichShip(temp->get_type()); 
+		{ cout << "Enemy Ship Destroyed! --> " << whichShip(temp->get_type()); 
 			if(_grid1->set_wreckage(fire_at))
 				cout << endl << "Square: " << fire_at << " is now wreckage" << endl;
 		} //returns 'destroyed' and the shiptype (enum)
+	}	
+}
+
+void subfire(){		// Fire method for each ship
+	Ship* temp;
+	Ship* temp2;
+	Ship* temp3;
+	int fire_at, health, health2, health3;
+	
+	if (_Submarine->can_attack(turn_Count) || _Submarine->lastFired() == -1) {
+		cout << "Which square do you want to hit? "; // pick square to fire at
+		cin  >> fire_at;
+		_Submarine->set_lastFired(turn_Count);
+		if(!_grid2->squareOccupied(fire_at)) //check if square is empty
+		{	
+			cout << endl << "SUB MISS: Square is Empty" << endl;
+			
+		}
+		//else if(_grid2->is_wreckage(fire_at)) // check if square has wreckage
+		//{	cout<< endl;
+		//	cout << "Square Contains wreckage." << endl ;
+		//}
+		else   // if square is occupied
+		{
+			temp = _grid2->get_square_ship(fire_at); // get square you want to fire at
+			health = temp->get_health();			// save health of ship in square
+			
+			cout << endl << "It's a HIT!" << endl;
+			health--;					// Otherwise decrease health and
+			temp->set_health(health);	// set it to the ship
+			if(temp->get_health() == NULL)			//if ships health is null then ship is destroyed
+			{ cout << "Enemy Ship Destroyed! --> " << whichShip(temp->get_type()); 
+				if(_grid1->set_wreckage(fire_at))
+					cout << endl << "Square: " << fire_at << " is now wreckage" << endl;
+			} //returns 'destroyed' and the shiptype (enum)
+			
+			//checks to see if the 2nd square has a ship and then takes 1 point HP
+			if (_grid2->squareOccupied(fire_at + 1)) {
+				temp2 = _grid2->get_square_ship(fire_at + 1); // get square you want to fire at
+				health2 = temp->get_health();			// save health of ship in square
+				
+				cout << endl << "2nd Square is a HIT!" << endl;
+				health2--;					// Otherwise decrease health and
+				temp2->set_health(health2);	// set it to the ship
+				if(temp2->get_health() == NULL)			//if ships health is null then ship is destroyed
+				{ cout << "Enemy Ship Destroyed! --> " << whichShip(temp2->get_type()); 
+					if(_grid1->set_wreckage(fire_at + 1))
+						cout << endl << "Square: " << fire_at + 1 << " is now wreckage" << endl;
+				} //returns 'destroyed' and the shiptype (enum)
+			}
+			//checks to see if the 3rd square has a ship and then takes 1 point HP
+			if (_grid2->squareOccupied(fire_at + 2)) {
+				temp3 = _grid2->get_square_ship(fire_at + 2); // get square you want to fire at
+				health3 = temp3->get_health();			// save health of ship in square
+				
+				cout << endl << "3rd Square is a HIT!" << endl;
+				health3--;					// Otherwise decrease health and
+				temp3->set_health(health3);	// set it to the ship
+				if(temp3->get_health() == NULL)			//if ships health is null then ship is destroyed
+				{ cout << "Enemy Ship Destroyed! --> " << whichShip(temp3->get_type()); 
+					if(_grid1->set_wreckage(fire_at + 2))
+						cout << endl << "Square: " << fire_at + 2 << " is now wreckage" << endl;
+				} //returns 'destroyed' and the shiptype (enum)
+			}
+			
+		}
 	}
-  }
 	// lets you know that the submarine cannot be used this turn
 	else {
 		cout << endl << "Error: Submarine is still reloading... please wait one more turn before using the sub" << endl;
 		battleSwitch(); // back to battle menu
 	}
-
+	
 	
 	
 }
@@ -1532,9 +1582,11 @@ void cfire(){		// Fire method for each ship
 }
 
 void csubfire(){		// Fire method for each ship
+	Ship* temp;
 	Ship* temp2;
-	int cfire_at, chealth;
-	 
+	Ship* temp3;
+	int cfire_at, chealth, chealth2, chealth3;
+	
 	cfire_at = rand() % gridSize;
 	
 	if(!_grid1->squareOccupied(cfire_at)) //check if sqaure is empty
@@ -1549,20 +1601,51 @@ void csubfire(){		// Fire method for each ship
 	else   // if square is occupied
 	{
 		
-		temp2 = _grid1->get_square_ship(cfire_at); // get square you want to fire at
-		chealth = temp2->get_health();			// save health of ship in square
+		temp = _grid1->get_square_ship(cfire_at); // get square you want to fire at
+		chealth = temp->get_health();			// save health of ship in square
 		
 		chealth--;					//  decrease health and
-		temp2->set_health(chealth);	// set it to the ship
-		if(temp2->get_health() == NULL)			//if ships health is null then ship is destroyed
+		temp->set_health(chealth);	// set it to the ship
+		if(temp->get_health() == NULL)			//if ships health is null then ship is destroyed
 		{ 
-			cout << "Your Ship is Destroyed! --> " << whichShip(temp2->get_type());
+			cout << "Your Ship is Destroyed! --> " << whichShip(temp->get_type());
 			if(_grid1->set_wreckage(cfire_at))
 				cout << endl << "Your Square: " << cfire_at << " is now wreckage" << endl;
 		} //returns 'destroyed' and the shiptype (enum)
-	}
+		
+		// checks for the 2nd square
+		if(_grid1->squareOccupied(cfire_at + 1)){
+			temp2 = _grid1->get_square_ship(cfire_at + 1); // get square you want to fire at
+			chealth2 = temp2->get_health();			// save health of ship in square
+			
+			chealth2--;					//  decrease health and
+			temp2->set_health(chealth2);	// set it to the ship
+			if(temp2->get_health() == NULL)			//if ships health is null then ship is destroyed
+			{ 
+				cout << "Your Ship is Destroyed! --> " << whichShip(temp2->get_type());
+				if(_grid1->set_wreckage(cfire_at + 1))
+					cout << endl << "Your Square: " << cfire_at + 1 << " is now wreckage" << endl;
+			} //returns 'destroyed' and the shiptype (enum)
+		}
+		if(_grid1->squareOccupied(cfire_at + 2)){
+			// checks for the 3rd square
+			temp3 = _grid1->get_square_ship(cfire_at + 2); // get square you want to fire at
+			chealth3 = temp3->get_health();			// save health of ship in square
+			
+			chealth3--;					//  decrease health and
+			temp3->set_health(chealth3);	// set it to the ship
+			if(temp3->get_health() == NULL)			//if ships health is null then ship is destroyed
+			{ 
+				cout << "Your Ship is Destroyed! --> " << whichShip(temp3->get_type());
+				if(_grid1->set_wreckage(cfire_at + 2))
+					cout << endl << "Your Square: " << cfire_at + 2 << " is now wreckage" << endl;
+			} //returns 'destroyed' and the shiptype (enum)
+		}
+	}		
 	
 }
+
+
 
 // this method 'decodes' the ship type from integer to string
 string whichShip(int ship){
@@ -1579,6 +1662,6 @@ string whichShip(int ship){
 	else {
 		return "Error: No Such Ship"; // returns NULL if there is a 
 	}
-
+	
 }
 

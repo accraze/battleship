@@ -1,8 +1,12 @@
 /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void fire()':
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1451: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1468: warning: NULL used in arithmetic
 /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void subfire()':
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1483: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1503: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1517: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1531: warning: NULL used in arithmetic
 /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void cfire()':
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1523: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1573: warning: NULL used in arithmetic
 /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void csubfire()':
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1557: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1609: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1623: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1637: warning: NULL used in arithmetic
