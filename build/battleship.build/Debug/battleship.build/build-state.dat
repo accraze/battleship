@@ -1,7 +1,7 @@
 Tbattleship
 v7
 r0
-t374889271.796835
+t374892506.286369
 cCheck dependencies
 cCompileC build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
 cLd /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship normal x86_64
@@ -37,7 +37,7 @@ t1254464642
 s5937
 
 N/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship
-t1353196471
+t1353199686
 s59448
 
 N/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/battleship.LinkFileList
@@ -46,13 +46,13 @@ t1351146646
 s130
 
 N/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o
-t1353196467
+t1353199686
 s166032
 
 N/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp
-c0000000050A823B3000000000000CB0B
-t1353196467
-s51979
+c0000000050A8303A000000000000CA73
+t1353199674
+s51827
 i<iostream>
 i<stdlib.h>
 i<stdio.h>
@@ -63,11 +63,11 @@ i<assert.h>
 
 CCheck dependencies
 r0
-lSLF07#2@18"Check dependencies374889271#374889271#0(0"0(0#1#0"8631529792#0"0#
+lSLF07#2@18"Check dependencies374892506#374892506#0(0"0(0#1#0"8633470528#0"0#
 
 CCompileC build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
-s374889271.621251
-e374889271.622947
+s374892485.414073
+e374892486.027110
 r1
 xCompileC
 xbuild/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o
@@ -76,15 +76,29 @@ xnormal
 xx86_64
 xc++
 xcom.apple.compilers.gcc.4_2
-lSLF07#2@71"Compile /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374889271#374889271#0(1430"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void fire()':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1523: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void subfire()':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1557: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1571: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1585: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void cfire()':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1630: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void csubfire()':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1666: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1679: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1695: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void ship_destruct(playerGrid*, int, Ship*)':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1734: warning: unused variable 'sunk_sub'9(22@23"NULL used in arithmetic374889271#92#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374889267#1523#0#1523#0#0"0(22@23"NULL used in arithmetic374889271#290#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374889267#1557#0#1557#0#0"0(22@23"NULL used in arithmetic374889271#393#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374889267#1571#0#1571#0#0"0(22@23"NULL used in arithmetic374889271#496#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374889267#1585#0#1585#0#0"0(22@23"NULL used in arithmetic374889271#692#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374889267#1630#0#1630#0#0"0(22@23"NULL used in arithmetic374889271#891#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374889267#1666#0#1666#0#0"0(22@23"NULL used in arithmetic374889271#994#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374889267#1679#0#1679#0#0"0(22@23"NULL used in arithmetic374889271#1097#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374889267#1695#0#1695#0#0"0(22@26"Unused variable 'sunk_sub'374889271#1324#106#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374889267#1734#0#1734#0#19"unused variable '*'0(0#0#63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp8633635040#1521"    cd /Users/accraze/Documents/ASU/classes/CSE240/battleship    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-generated-files.hmap -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-own-target-headers.hmap -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-all-target-headers.hmap -iquote /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-project-headers.hmap -F/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/include -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/DerivedSources/x86_64 -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/DerivedSources -c /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp -o /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o0#
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void fire()':
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1519: warning: NULL used in arithmetic
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void subfire()':
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1553: warning: NULL used in arithmetic
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1567: warning: NULL used in arithmetic
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1581: warning: NULL used in arithmetic
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void cfire()':
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1626: warning: NULL used in arithmetic
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void csubfire()':
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1662: warning: NULL used in arithmetic
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1675: warning: NULL used in arithmetic
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1691: warning: NULL used in arithmetic
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void ship_destruct(playerGrid*, int, Ship*)':
+o/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1730: warning: unused variable 'sunk_sub'
+lSLF07#2@71"Compile /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374892485#374892486#0(1430"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void fire()':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1519: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void subfire()':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1553: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1567: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1581: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void cfire()':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1626: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void csubfire()':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1662: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1675: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1691: warning: NULL used in arithmetic/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void ship_destruct(playerGrid*, int, Ship*)':/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1730: warning: unused variable 'sunk_sub'9(22@23"NULL used in arithmetic374892485#92#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374892474#1519#0#1519#0#0"0(22@23"NULL used in arithmetic374892485#290#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374892474#1553#0#1553#0#0"0(22@23"NULL used in arithmetic374892485#393#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374892474#1567#0#1567#0#0"0(22@23"NULL used in arithmetic374892485#496#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374892474#1581#0#1581#0#0"0(22@23"NULL used in arithmetic374892485#692#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374892474#1626#0#1626#0#0"0(22@23"NULL used in arithmetic374892485#891#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374892474#1662#0#1662#0#0"0(22@23"NULL used in arithmetic374892485#994#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374892474#1675#0#1675#0#0"0(22@23"NULL used in arithmetic374892485#1097#103#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374892474#1691#0#1691#0#0"0(22@26"Unused variable 'sunk_sub'374892485#1324#106#0(6@63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp374892474#1730#0#1730#0#19"unused variable '*'0(0#0#63"/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp8631483776#1521"    cd /Users/accraze/Documents/ASU/classes/CSE240/battleship    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-generated-files.hmap -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-own-target-headers.hmap -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-all-target-headers.hmap -iquote /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/battleship-project-headers.hmap -F/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/include -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/DerivedSources/x86_64 -I/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/DerivedSources -c /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp -o /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/main.o0#
 
 CLd /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship normal x86_64
-s374889271.623018
-e374889271.796787
+s374892486.027207
+e374892486.053578
 r1
 xLd
 x/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship
 xnormal
 xx86_64
-lSLF07#2@82"Link /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship374889271#374889271#0(0"0(0#0#0"8631737568#590"    cd /Users/accraze/Documents/ASU/classes/CSE240/battleship    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/g++-4.2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -F/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -filelist /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/battleship.LinkFileList -mmacosx-version-min=10.6 -o /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship0#
+lSLF07#2@82"Link /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship374892486#374892486#0(0"0(0#0#0"8631658080#590"    cd /Users/accraze/Documents/ASU/classes/CSE240/battleship    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/g++-4.2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -F/Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug -filelist /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/battleship.build/Debug/battleship.build/Objects-normal/x86_64/battleship.LinkFileList -mmacosx-version-min=10.6 -o /Users/accraze/Documents/ASU/classes/CSE240/battleship/build/Debug/battleship0#
 

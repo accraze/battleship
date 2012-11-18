@@ -1,12 +1,14 @@
 /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void fire()':
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1468: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1512: warning: NULL used in arithmetic
 /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void subfire()':
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1503: warning: NULL used in arithmetic
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1517: warning: NULL used in arithmetic
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1531: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1546: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1560: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1574: warning: NULL used in arithmetic
 /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void cfire()':
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1573: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1619: warning: NULL used in arithmetic
 /Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void csubfire()':
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1609: warning: NULL used in arithmetic
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1623: warning: NULL used in arithmetic
-/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1637: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1655: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1668: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1684: warning: NULL used in arithmetic
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp: In function 'void ship_destruct(playerGrid*, int, Ship*)':
+/Users/accraze/Documents/ASU/classes/CSE240/battleship/main.cpp:1723: warning: unused variable 'sunk_sub'

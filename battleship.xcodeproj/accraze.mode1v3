@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32969A816585BDB00BC1AD9</string>
+						<string>F32969D8165868C500BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F329681216575E8700BC1AD9</string>
@@ -256,7 +256,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32969A916585BDB00BC1AD9</string>
+						<string>F32969D9165868C500BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F329688116580D3700BC1AD9</string>
@@ -296,7 +296,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32969AA16585BDB00BC1AD9</string>
+						<string>F32969DA165868C500BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F329683016576B3F00BC1AD9</string>
@@ -336,7 +336,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32969AB16585BDB00BC1AD9</string>
+						<string>F32969DB165868C500BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F3296916165823B100BC1AD9</string>
@@ -376,7 +376,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32969AC16585BDB00BC1AD9</string>
+						<string>F32969DC165868C500BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F329692D16582B9400BC1AD9</string>
@@ -416,7 +416,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>F32969AD16585BDB00BC1AD9</string>
+						<string>F32969DD165868C500BC1AD9</string>
 						<key>history</key>
 						<array>
 							<string>F32969731658493900BC1AD9</string>
@@ -536,7 +536,7 @@
 							<real>186</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>2 130 1247 648 0 0 1280 778 </string>
+						<string>-2 130 1247 648 0 0 1280 778 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -566,7 +566,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>F32969A716585BDB00BC1AD9</string>
+										<string>F32969D7165868C500BC1AD9</string>
 										<key>history</key>
 										<array>
 											<string>F391639A1644A81B00E69CE3</string>
@@ -593,7 +593,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1039, 602}}</string>
 								<key>RubberWindowFrame</key>
-								<string>2 130 1247 648 0 0 1280 778 </string>
+								<string>-2 130 1247 648 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -613,7 +613,7 @@
 								<key>Frame</key>
 								<string>{{0, 607}, {1039, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>2 130 1247 648 0 0 1280 778 </string>
+								<string>-2 130 1247 648 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -777,7 +777,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>F32969AE16585BDB00BC1AD9</string>
 		<string>F32967251656B86500BC1AD9</string>
 		<string>F32967261656B86500BC1AD9</string>
 		<string>1CD10A99069EF8BA00B06720</string>
@@ -787,7 +786,7 @@
 		<string>/Users/accraze/Documents/ASU/classes/CSE240/battleship/battleship.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>2 130 1247 648 0 0 1280 778 </string>
+	<string>-2 130 1247 648 0 0 1280 778 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
